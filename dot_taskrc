@@ -1,0 +1,13 @@
+# Files
+data.location=~/.task
+
+# include /usr/share/doc/task/rc/dark-gray-256.theme
+
+report.statbar.description = Displays pending tasks in order of descending urgency
+report.statbar.columns = description.truncated_count,due.relative
+report.statbar.labels = Description, Due
+report.statbar.filter = +READY +DUE
+report.statbar.sort = urgency-
+
+report.next.labels = ID,Active,Deps,P,Project,Tag,Recur,S,Due,Until,Description,Urg
+report.next.columns = id,start.age,depends,priority,project,tags,recur,scheduled.countdown,due.relative,until.remaining,description,urgency

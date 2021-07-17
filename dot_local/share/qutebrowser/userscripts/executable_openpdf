@@ -1,0 +1,5 @@
+#!/bin/bash
+
+curl $QUTE_URL > /tmp/pdf.pdf
+
+zathura /tmp/pdf.pdf

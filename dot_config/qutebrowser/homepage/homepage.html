@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Home</title>
+    <link rel="stylesheet" href="homepage.css" />
+    <link href="favicon.png" rel="shortcut icon" type="image/x-icon" />
+  </head>
+  <body>
+    <video autoplay="" loop="" id="my_video">
+      <source src="Countach.mp4" type="video/mp4" />
+    </video>
+    <div class="container">
+      <div id="clock"></div>
+      <div class="bookmark-container">
+        <div class="bookmark-set">
+          <div class="bookmark-title">News</div>
+          <div class="bookmark-inner-container">
+            <a class="bookmark" href="https://reason.com/" target="_self"
+               >Reason</a
+			>
+            <a class="bookmark" href="https://www.wsj.com/" target="_self"
+               >The Wall Street Journal</a
+					 >
+            <a
+              class="bookmark"
+              href="https://www.electionbettingodds.com/"
+              target="_self"
+              >Election Betting Odds</a
+				      ><a
+					 class="bookmark"
+					 href="https://news.ycombinator.com/"
+					 target="_self"
+					 >Hacker News</a
+						       >
+          </div>
+        </div>
+        <div class="bookmark-set">
+          <div class="bookmark-title">Linux</div>
+          <div class="bookmark-inner-container">
+            <a class="bookmark" href="https://www.archlinux.org/" target="_self"
+               >Arch Homepage</a
+			       >
+            <a
+              class="bookmark"
+              href="https://wiki.archlinux.org/"
+              target="_self"
+              >Arch Wiki</a
+			  >
+          </div>
+        </div>
+        <div class="bookmark-set">
+          <div class="bookmark-title">Other</div>
+          <div class="bookmark-inner-container">
+            <a class="bookmark" href="https://xkcd.com/" target="_self">XKCD</a>
+            <a
+              class="bookmark"
+              href="https://www.metaculus.com/questions/"
+              target="_self"
+              >Metaculus </a
+			   ><a class="bookmark" href="https://www.reddit.com/" target="_self"
+			       >Reddit</a
+					>
+            <a class="bookmark" href="https://github.com/" target="_self"
+               >Github</a
+			>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      // Get current time and format
+      getTime = () => {
+          let date = new Date(),
+              min = date.getMinutes(),
+              sec = date.getSeconds(),
+              hour = date.getHours();
+
+          return (
+              "" +
+		  (hour < 10 ? "0" + hour : hour) +
+		  ":" +
+		  (min < 10 ? "0" + min : min) +
+		  ":" +
+		  (sec < 10 ? "0" + sec : sec)
+          );
+      };
+
+      window.onload = () => {
+          let xhr = new XMLHttpRequest();
+          // Set up the clock
+          document.getElementById("clock").innerHTML = getTime();
+          // Set clock interval to tick clock
+          setInterval(() => {
+              document.getElementById("clock").innerHTML = getTime();
+          }, 100);
+      };
+    </script>
+  </body>
+</html>

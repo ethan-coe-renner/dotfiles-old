@@ -1,0 +1,5 @@
+kmonad /home/ethan/.config/kmonad/t480.kbd &
+
+feh --bg-scale /home/ethan/.background-image
+
+exec spectrwm

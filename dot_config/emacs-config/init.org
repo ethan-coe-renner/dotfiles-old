@@ -132,7 +132,7 @@
 
   (leader-key-def
     "<SPC>" 'dired-jump
-    "m" '(lambda () (interactive) (find-file "~/.dotfiles/homedots/.config/emacs-config/init.org"))
+    "m" '(lambda () (interactive) (find-file "~/.local/share/chezmoi/dot_config/emacs-config/init.org"))
     )
 #+end_src
 * Mini Buffer
@@ -221,11 +221,10 @@
 #+begin_src emacs-lisp
   (setq backup-directory-alist `(("." . "~/.saves")))
   (setq focus-follows-mouse t)
-
+  
   (setq delete-by-moving-to-trash t)
   (defun system-move-file-to-trash (filename)
     (shell-command (concat (executable-find "rip") " " filename)))
-
 #+end_src
 * Terminals
 #+begin_src emacs-lisp

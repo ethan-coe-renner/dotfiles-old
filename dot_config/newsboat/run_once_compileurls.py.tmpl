@@ -1,9 +1,11 @@
 #!/usr/bin/env python
+
+# urls.json hash: {{ include "dot_config/newsboat/urls.json" | sha256sum }}
 ## this script is used to convert json to newsboat url file
 
 import json
 
-inputfile = "/home/ethan/.dotfiles/homedots/.config/newsboat/urls.json"
+inputfile = "/home/ethan/.local/share/chezmoi/dot_config/newsboat/urls.json"
 outputfile = "/home/ethan/.config/newsboat/urls"
 
 def write_with_tag(urls, tag, f):

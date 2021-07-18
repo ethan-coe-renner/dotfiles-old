@@ -70,6 +70,6 @@ alias rb='reboot'
 alias sx='startx'
 alias chwall='betterlockscreen -u'
 alias backup='restic backup ~/code ~/media ~/school ~/readlater'
-alias syncbackup='rclone sync .bak raspi:backup/bak'
+alias syncbackup='rclone sync .bak raspi:bak'
 
 #source /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh

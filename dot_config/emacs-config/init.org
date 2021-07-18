@@ -408,11 +408,11 @@
   (use-package ess)
   (use-package json-mode)
   
-  ;; (add-to-list 'load-path "~/.config/emacs-config/kbd-mode/lisp/")
-  ;; (require 'kbd-mode)
-  
   (straight-use-package
    '(kbd-mode :type git :host github :repo "kmonad/kbd-mode"))
+  
+  (straight-use-package
+   '(chezmoi :type git :host github :repo "tuh8888/chezmoi.el"))
 #+end_src
 ** Syntax Checking
 #+begin_src emacs-lisp

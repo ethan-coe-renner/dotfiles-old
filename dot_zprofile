@@ -1,0 +1,13 @@
+PATH=$PATH:~/.local/bin:~/.cargo/bin
+export EDITOR="nvim"
+export TERMINAL="alacritty"
+export BROWSER="qutebrowser"
+
+export RESTIC_REPOSITORY="/home/ethan/.bak"
+export RESTIC_PASSWORD_FILE="/home/ethan/.restic/psswd"
+export BEMENU_OPTS="-b"
+
+# If running from tty1 start sway
+if [ "$(tty)" = "/dev/tty1" ]; then
+    exec startx
+fi

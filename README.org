@@ -1,0 +1,5 @@
+#+TITLE: Ethan Coe-Renner's Dotfiles
+#+SUBTITLE: Dotfiles Managed by Chezmoi
+
+This repository contains my dotfiles managed by [[https://www.chezmoi.io/][Chezmoi]].
+It contains init scripts to generate emacs configuration from org, and install [[https://github.com/hlissner/doom-emacs][Doom Emacs]] with [[https://github.com/plexus/chemacs2][Chemacs2]] to switch between.

@@ -3,6 +3,7 @@
     autoPush = true
 
 encryption = "age"
+format = "yaml"
 
 [age]
     identity = "/home/ethan/key.txt"

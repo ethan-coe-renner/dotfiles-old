@@ -3,4 +3,6 @@ kmonad /home/ethan/.config/kmonad/external.kbd &
 
 feh --bg-scale /home/ethan/.background-image
 
+grobi update
+
 exec spectrwm

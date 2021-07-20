@@ -15,90 +15,15 @@ compinit
 # PS1="[%(?.%F{green}.%F{red})%n@%m%f %F{green}%d%f]%# "
 # RPROMPT='%*'
 
-export BAT_THEME="gruvbox-dark"
-export TERM=xterm-256color
-
 bindkey '^ ' autosuggest-accept
 
 eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
 
-# aliases
-ex() {
-        if [ -f $1 ]; then
-                case $1 in
-                *.tar.bz2) tar xjf $1 ;;
-                *.tar.gz) tar xzf $1 ;;
-                *.bz2) bunzip2 $1 ;;
-                *.rar) unrar x $1 ;;
-                *.gz) gunzip $1 ;;
-                *.tar) tar xf $1 ;;
-                *.tbz2) tar xjf $1 ;;
-                *.tgz) tar xzf $1 ;;
-                *.zip) unzip $1 ;;
-                *.Z) uncompress $1 ;;
-                *.7z) 7z x $1 ;;
-                *.deb) ar x $1 ;;
-                *.tar.xz) tar xf $1 ;;
-                *.tar.zst) unzstd $1 ;;
-                *) echo "'$1' cannot be extracted via ex()" ;;
-                esac
-        else
-                echo "'$1' is not a valid file"
-        fi
-}
+source $HOME/.local/share/chezmoi/dot_config/zsh/aliases.zsh 
+source $HOME/.local/share/chezmoi/dot_config/zsh/antigen.zsh
 
-#=Tool configuration
-alias ls='exa --group-directories-first'
-alias ll='exa --long --grid --git --group-directories-first'
-alias la='exa -a --group-directories-first'
-alias nnn='nnn -c'
-alias lal='exa -a --long --grid --git --group-directories-first'
-#alias rm='echo "use rip instead to remove"'
-alias cat='bat --theme=Nord'
-alias grep='rg'
-alias yt='youtube-dl -f best -i'
-alias yta="youtube-dl -f bestaudio "
-alias cp="cp -i"
-alias mv='mv -i'
-alias :q='exit'
-alias rip='rip --graveyard ~/.local/share/Trash'
+antigen bundle jeffreytse/zsh-vi-mode
+antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle zsh-users/zsh-syntax-highlighting
 
-#=program shortcuts
-alias cd='z'
-alias v='nvim'
-alias sn='shutdown now'
-alias rb='reboot'
-alias sx='startx'
-alias chwall='betterlockscreen -u'
-alias backup='restic backup ~/code ~/media ~/school ~/readlater'
-alias syncbackup='rclone sync .bak raspi:backup/bak'
-alias syncmedia='rclone sync media raspi:media'
-
-### Added by Zinit's installer
-if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
-    print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
-    command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
-    command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
-        print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
-        print -P "%F{160}▓▒░ The clone has failed.%f%b"
-fi
-
-source "$HOME/.zinit/bin/zinit.zsh"
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
-
-# Load a few important annexes, without Turbo
-# (this is currently required for annexes)
-zinit light-mode for \
-    zinit-zsh/z-a-rust \
-    zinit-zsh/z-a-as-monitor \
-    zinit-zsh/z-a-patch-dl \
-    zinit-zsh/z-a-bin-gem-node
-
-### End of Zinit's installer chunk
-
-zinit light zsh-users/zsh-autosuggestions
-zinit light zdharma/fast-syntax-highlighting
-zinit ice depth=1
-zinit light jeffreytse/zsh-vi-mode

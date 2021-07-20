@@ -8,6 +8,9 @@ export RESTIC_PASSWORD_FILE="/home/ethan/.restic/psswd"
 
 export BEMENU_OPTS="bemenu-run -b -l 5 --fn 'Source Code Pro' --tb '#282828'  --nb '#282828' --fb '#282828' --hb '#cc241d' --sb '#cc241d' --tf '#ebdbb2' --ff '#ebdbb2' --hf '#ebdbb2' --sf '#ebdbb2' -p ':'"
 
+export BAT_THEME="gruvbox-dark"
+export TERM=xterm-256color
+
 # If running from tty1 start sway
 if [ "$(tty)" = "/dev/tty1" ]; then
     exec startx

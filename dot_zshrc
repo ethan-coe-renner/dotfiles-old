@@ -12,13 +12,10 @@ autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 
-# PS1="[%(?.%F{green}.%F{red})%n@%m%f %F{green}%d%f]%# "
-# RPROMPT='%*'
-
 bindkey '^ ' autosuggest-accept
 
 eval "$(zoxide init zsh)"
-# eval "$(starship init zsh)"
+eval "$(starship init zsh)"
 
 source $HOME/.local/share/chezmoi/dot_config/zsh/aliases.zsh 
 source $HOME/.local/share/chezmoi/dot_config/zsh/antigen.zsh

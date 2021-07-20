@@ -42,6 +42,7 @@ alias rip='rip --graveyard ~/.local/share/Trash'
 #=program shortcuts
 alias cd='z'
 alias v='nvim'
+alias e='emacsclient -c'
 alias sn='shutdown now'
 alias rb='reboot'
 alias sx='startx'

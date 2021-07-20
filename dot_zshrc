@@ -23,8 +23,8 @@ eval "$(starship init zsh)"
 source $HOME/.local/share/chezmoi/dot_config/zsh/aliases.zsh 
 source $HOME/.local/share/chezmoi/dot_config/zsh/antigen.zsh
 
-antigen bundle jeffreytse/zsh-vi-mode
 antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle jeffreytse/zsh-vi-mode
 antigen bundle zsh-users/zsh-syntax-highlighting
 
 antigen apply

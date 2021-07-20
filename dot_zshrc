@@ -74,3 +74,7 @@ alias syncbackup='rclone sync .bak raspi:backup/bak'
 alias syncmedia='rclone sync media raspi:media'
 
 #source /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+
+# Local Variables:
+# mode: sh-mode
+# End:

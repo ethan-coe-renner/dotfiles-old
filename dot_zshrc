@@ -26,5 +26,6 @@ source $HOME/.local/share/chezmoi/dot_config/zsh/antigen.zsh
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle jeffreytse/zsh-vi-mode
 antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle hlissner/zsh-autopair
 
 antigen apply

@@ -4,6 +4,7 @@ HISTSIZE=10000
 SAVEHIST=1000
 setopt extendedglob nomatch
 # End of lines configured by zsh-newuser-install
+
 # The following lines were added by compinstall
 zstyle :compinstall filename '/home/ethan/.zshrc'
 
@@ -14,7 +15,7 @@ compinit
 PS1="[%(?.%F{green}.%F{red})%n@%m%f %F{green}%d%f]%# "
 RPROMPT='%*'
 
-export BAT_THEME="Nord"
+export BAT_THEME="gruvbox-dark"
 export TERM=xterm-256color
 
 bindkey '^ ' autosuggest-accept
@@ -74,7 +75,3 @@ alias syncbackup='rclone sync .bak raspi:backup/bak'
 alias syncmedia='rclone sync media raspi:media'
 
 #source /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
-
-# Local Variables:
-# mode: sh-mode
-# End:

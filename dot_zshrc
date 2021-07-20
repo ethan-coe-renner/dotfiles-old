@@ -74,8 +74,6 @@ alias backup='restic backup ~/code ~/media ~/school ~/readlater'
 alias syncbackup='rclone sync .bak raspi:backup/bak'
 alias syncmedia='rclone sync media raspi:media'
 
-#source /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
-
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
     print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
@@ -101,3 +99,5 @@ zinit light-mode for \
 
 zinit light zsh-users/zsh-autosuggestions
 zinit light zdharma/fast-syntax-highlighting
+zinit ice depth=1
+zinit light jeffreytse/zsh-vi-mode

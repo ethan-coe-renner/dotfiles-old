@@ -408,8 +408,6 @@
   (use-package ess)
   (use-package json-mode)
   
-  (use-package elvish-mode)
-  
   (straight-use-package
    '(kbd-mode :type git :host github :repo "kmonad/kbd-mode"))
 #+end_src

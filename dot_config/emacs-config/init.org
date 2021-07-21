@@ -283,7 +283,6 @@
     "a" 'org-agenda
     "c" 'org-capture
     "ep" 'org-pandoc-export-to-latex-pdf
-    "eh" 'org-pandoc-export-to-html5
     )
 #+end_src
 * EVIL
@@ -370,9 +369,9 @@
 * Development
 ** Formatting
 #+begin_src emacs-lisp
-  ;; (use-package aggressive-indent
-  ;;   :config
-  ;;   (add-hook 'prog-mode-hook #'aggressive-indent-mode))
+  (use-package aggressive-indent
+    :config
+    (add-hook 'prog-mode-hook #'aggressive-indent-mode))
   (use-package format-all
     :config
     (format-all-mode 1))
@@ -417,44 +416,9 @@
   :init (global-flycheck-mode)
   )
 #+end_src
-** LSP
-#+begin_src emacs-lisp
-  (defun lsp-mode-setup ()
-    (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
-    (lsp-headerline-breadcrumb-mode))
-
-  (setq lsp-keymap-prefix "C-c l")
-  (use-package lsp-mode
-    :commands (lsp lsp-deferred)
-    :config
-    (setq lsp-rust-analyzer-cargo-watch-command "clippy")
-    :hook (lsp-mode . 'lsp-mode-setup)
-    (lsp-mode . lsp-enable-which-key-integration)
-    ((c++-mode c-mode) . 'lsp-deferred)
-    )
-
-  (use-package lsp-ui)
-
-  (use-package lsp-treemacs
-    :after lsp
-    :commands lsp-treemacs-error-list
-    )
-
-  ;; C, cpp, etc lsp stuff
-  (use-package ccls
-    :hook ((c-mode c++-mode objc-mode cuda-mode) .
-           (lambda () (require 'ccls) (lsp))))
-  (setq ccls-executable "/usr/bin/ccls")
-  (setq lsp-prefer-flymake nil)
-
-
-  ;; Java
-  (use-package lsp-java :config (add-hook 'java-mode-hook 'lsp))
-#+end_src
 ** Completion
 #+begin_src emacs-lisp
   (use-package company
-    :after lsp-mode
     :custom
     (company-minimum-prefix-length 1)
     (company-idle-delay 0.0)

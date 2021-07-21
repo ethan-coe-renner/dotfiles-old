@@ -6,7 +6,7 @@ encryption = "age"
 format = "yaml"
 
 [age]
-    identity = "/home/ethan/key.txt"
+    identity = "/home/ethan/.key.txt"
     recipient = "age15zpppskyh54atkm9xg6nt4j2m2mmzr43zcz2tt07nj04g68vzuls9ks9wh"
 
 [edit]

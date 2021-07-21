@@ -29,7 +29,6 @@ alias ll='exa --long --grid --git --group-directories-first'
 alias la='exa -a --group-directories-first'
 alias nnn='nnn -c'
 alias lal='exa -a --long --grid --git --group-directories-first'
-#alias rm='echo "use rip instead to remove"'
 alias cat='bat --theme=Nord'
 alias grep='rg'
 alias yt='youtube-dl -f best -i'
@@ -37,7 +36,7 @@ alias yta="youtube-dl -f bestaudio "
 alias cp="cp -i"
 alias mv='mv -i'
 alias :q='exit'
-alias rip='rip --graveyard ~/.local/share/Trash'
+alias rm='rip --graveyard ~/.local/share/Trash'
 
 #=program shortcuts
 alias cd='z'

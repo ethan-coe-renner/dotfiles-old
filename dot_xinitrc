@@ -3,7 +3,7 @@ kmonad /home/ethan/.config/kmonad/external.kbd &
 
 feh --bg-scale /home/ethan/.background-image
 
-tmux
+tmux &
 
 grobi update
 

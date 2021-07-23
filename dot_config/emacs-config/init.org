@@ -24,6 +24,11 @@
 (setq custom-file "~/.config/emacs-config/custom.el")
 (load custom-file)
 #+end_src
+* Native Comp
+#+begin_src emacs-lisp
+  (setq warning-minimum-level :error)
+#+end_src
+
 * Aesthetics
 ** UI Setup
 #+begin_src emacs-lisp
@@ -43,10 +48,10 @@
 #+end_src
 ** Font
 #+begin_src emacs-lisp
-  (set-face-attribute 'default nil :font "Source Code Pro" :height 150)
+  (set-face-attribute 'default nil :font "Source Code Pro" :height 120)
 
   ;; Set the fixed pitch face
-  (set-face-attribute 'fixed-pitch nil :font "Source Code Pro" :height 150)
+  (set-face-attribute 'fixed-pitch nil :font "Source Code Pro" :height 120)
 #+end_src
 ** Modeline
 #+begin_src emacs-lisp
@@ -118,11 +123,6 @@
 
   (use-package all-the-icons-dired
     :hook (dired-mode . all-the-icons-dired-mode))
-
-  (use-package dired-open
-    :config
-    (setq dired-open-extensions '(("png" . "sxiv")
-                                  ("mkv" . "mpv"))))
 
   (general-def
     :states 'normal
@@ -405,7 +405,6 @@
   (use-package nix-mode)
   
   (use-package ess)
-  (use-package json-mode)
   
   (straight-use-package
    '(kbd-mode :type git :host github :repo "kmonad/kbd-mode"))
@@ -418,16 +417,31 @@
 #+end_src
 ** Completion
 #+begin_src emacs-lisp
-  (use-package company
-    :custom
-    (company-minimum-prefix-length 1)
-    (company-idle-delay 0.0)
-    :config
-    (global-company-mode 1))
-  
-  (use-package yasnippet)
-  (use-package yasnippet-snippets)
+  (use-package company)
+  (setq company-minimum-prefix-length 1
+        company-idle-delay 0.0) ;; default is 0.2
 #+end_src
+** LSP
+#+begin_src emacs-lisp
+  (use-package lsp-mode
+    :init
+    ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+    (setq lsp-keymap-prefix "C-c l")
+    :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+           (rustic-mode . lsp)
+           ;; if you want which-key integration
+           (lsp-mode . lsp-enable-which-key-integration))
+    :commands lsp)
+  
+  (setq gc-cons-threshold 100000000) ;; set per the lsp-doctor recommendation
+  (setq read-process-output-max (* 1024 1024)) ;; same reason ^
+  
+  
+  (use-package lsp-ui :commands lsp-ui-mode)
+  (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
+  
+#+end_src
+
 
 * local variables
 ;; Local Variables: 

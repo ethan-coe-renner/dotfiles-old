@@ -2,4 +2,6 @@
 .config/emacs-config/init.org
 .config/zsh
 .config/zsh/*
+.config/nix
+.config/nix/*
 README.org

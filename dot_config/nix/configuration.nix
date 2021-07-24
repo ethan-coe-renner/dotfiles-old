@@ -75,10 +75,13 @@ in {
     rawtherapee
     pcmanfm
     ungoogled-chromium
-    materia-theme
     papirus-icon-theme
     gparted
     keepassxc
+    dracula-theme
+    libreoffice
+    geany
+    qbittorrent
 
     # Games
     endless-sky

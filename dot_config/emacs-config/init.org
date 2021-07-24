@@ -26,25 +26,25 @@
 #+end_src
 * Native Comp
 #+begin_src emacs-lisp
-  (setq warning-minimum-level :error)
+  (setq warning-minimum-level :error) ;; stops barage of warnings with native comp
 #+end_src
-
 * Aesthetics
 ** UI Setup
 #+begin_src emacs-lisp
-(scroll-bar-mode -1)
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(global-hl-line-mode)
-(setq inhibit-splash-screen t)
-(setq frame-resize-pixelwise t)
+  (scroll-bar-mode -1)
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (global-hl-line-mode)
+  (setq inhibit-splash-screen t)
+  (setq frame-resize-pixelwise t)
 #+end_src
 ** Theme
 #+begin_src emacs-lisp
   (use-package doom-themes
-    :init (load-theme 'doom-gruvbox t))
-
-  (use-package rainbow-mode)
+    :config (load-theme 'doom-dracula t))
+  
+  (use-package rainbow-mode
+    :hook web-mode)
 #+end_src
 ** Font
 #+begin_src emacs-lisp
@@ -56,16 +56,12 @@
 ** Modeline
 #+begin_src emacs-lisp
   (use-package doom-modeline
+    :init
+    (setq all-the-icons-scale-factor 1.1)
     :config
+    (setq doom-modeline-icon t)
     (doom-modeline-mode))
-
-  (defun enable-doom-modeline-icons (_frame)
-    (setq doom-modeline-icon t))
-
-  (add-hook 'after-make-frame-functions
-            #'enable-doom-modeline-icons)
-
-  (setq all-the-icons-scale-factor 1.1)
+  
 #+end_src
 ** Dashboard
 #+begin_src emacs-lisp
@@ -81,28 +77,26 @@
     :config
     (dashboard-setup-startup-hook)
     )
-
+  
     (recentf-mode t)
     (setq recentf-max-saved-items 100)
 #+end_src
 ** Delimiter setup
 #+begin_src emacs-lisp
   (use-package rainbow-delimiters
-    :config
-    (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
-
+    :hook (prog-mode . rainbow-delimiters-mode))
+  
   (show-paren-mode 1)
   (electric-pair-mode 1)
   (setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit)
-
 #+end_src
-
 ** Line Number Setup
 #+begin_src emacs-lisp
-  (use-package add-hooks)
-
-  (add-hooks '(((prog-mode-hook text-mode-hook conf-mode-hook rust-mode-hook) . display-line-numbers-mode)))
-
+  (dolist (mode '(text-mode-hook
+                  prog-mode-hook
+                  conf-mode-hook
+                  rust-mode-hook))
+    (add-hook mode (lambda () (display-line-numbers-mode 1))))
 #+end_src
 * General Setup
 #+begin_src emacs-lisp
@@ -110,7 +104,7 @@
     :config
     (general-auto-unbind-keys)
     (general-evil-setup)
-
+  
     (general-create-definer leader-key-def
       :keymaps '(normal insert visual emacs)
       :prefix "SPC"
@@ -119,28 +113,36 @@
 #+end_src
 * Dired
 #+begin_src emacs-lisp
-  (setq dired-listing-switches "-agho --group-directories-first")
-
+  (use-package dired
+    :straight nil
+    :config
+    (setq dired-listing-switches "-agho --group-directories-first")
+    :general
+    (general-def
+      :states 'normal
+      :keymaps 'dired-mode-map
+      "h" 'dired-up-directory
+      "l" 'dired-find-file)
+    )
+  
   (use-package all-the-icons-dired
     :hook (dired-mode . all-the-icons-dired-mode))
-
-  (general-def
-    :states 'normal
-    :keymaps 'dired-mode-map
-    "h" 'dired-up-directory
-    "l" 'dired-find-file)
-
+  
+  
   (leader-key-def
     "<SPC>" 'dired-jump
     "m" '(lambda () (interactive) (find-file "~/.local/share/chezmoi/dot_config/emacs-config/init.org"))
     )
+  
+  ;; Revert Dired and other buffers
+  (global-auto-revert-mode 1)
+  (setq global-auto-revert-non-file-buffers t)
 #+end_src
 * Mini Buffer
 #+begin_src emacs-lisp
   (use-package vertico
     :init
     (vertico-mode)
-
     (setq vertico-cycle t)
     )
 
@@ -173,15 +175,17 @@
     ;; Enable recursive minibuffers
     (setq enable-recursive-minibuffers t))
 
-  (use-package consult)
-
-  (leader-key-def
-    "b" 'consult-buffer
-    "r" 'consult-recent-file
-    "i" 'consult-imenu
-    )
+  (use-package consult
+    :general
+    (leader-key-def
+      "s" 'consult-line
+      "b" 'consult-buffer
+      "r" 'consult-recent-file
+      "i" 'consult-imenu
+      ))
 
   (use-package marginalia
+    :after vertico
     :init
     (marginalia-mode)
     (setq marginalia-annotators '(marginalia-annotators-heavy))
@@ -220,11 +224,16 @@
 * Misc
 #+begin_src emacs-lisp
   (setq backup-directory-alist `(("." . "~/.saves")))
-  (setq focus-follows-mouse t)
   
   (setq delete-by-moving-to-trash t)
   (defun system-move-file-to-trash (filename)
-    (shell-command (concat (executable-find "rip") " " filename)))
+    (shell-command (concat (executable-find "rip --graveyard ~/.local/share/Trash") " " filename)))
+#+end_src
+* Whitespace
+#+begin_src emacs-lisp
+  (use-package ws-butler
+    :hook ((text-mode . ws-butler-mode)
+           (prog-mode . ws-butler-mode)))
 #+end_src
 * Terminals
 #+begin_src emacs-lisp
@@ -240,77 +249,77 @@
 #+end_src
 * Org Mode
 #+begin_src emacs-lisp
-  (add-hook 'org-mode-hook 'org-indent-mode)
-  (setq org-ellipsis " ▾")
-
-  (setq org-M-RET-may-split-line nil)
-  (use-package org-superstar
-    :hook (org-mode . (lambda () (org-superstar-mode 1))))
-
-  ;; (use-package poly-org)
-  ;; (add-to-list 'auto-mode-alist '("\\.org" . poly-org-mode))
-
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((emacs-lisp . t)
-     (python . t)
-     (R . t)
-     (shell . t)))
-
-  (setq org-confirm-babel-evaluate nil)
-  (setq org-src-window-setup 'current-window)
-
-  (require 'org-tempo)
-
-  (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
-  (add-to-list 'org-structure-template-alist '("py" . "src python"))
-  (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
-  (add-to-list 'org-structure-template-alist '("r" . "src R"))
-
-  (use-package ox-pandoc)
-  (setq org-pandoc-options-for-latex-pdf '((pdf-engine . "xelatex")))
-  ;; (setq org-pandoc-options-for-latex-pdf '((fontfamily . "iwona")))
-
-
-  (use-package org-ql)
-
-  (setq org-latex-pdf-process '("texi2dvi -p -b -V %f"))
-  (use-package org-ref)
-  (setq org-ref-default-bibliography '("~/school/pacs/local.bib"))
-
-
-  (leader-key-def
-    "a" 'org-agenda
-    "c" 'org-capture
-    "ep" 'org-pandoc-export-to-latex-pdf
+  (use-package org
+    :straight nil
+    :init
+    (setq org-confirm-babel-evaluate nil)
+    (setq org-src-window-setup 'current-window)
+    (setq org-ellipsis " ▾")
+    (setq org-M-RET-may-split-line nil)
+    (setq org-latex-pdf-process '("texi2dvi -p -b -V %f"))
+  
+    (require 'org-tempo)
+    :config
+    (org-babel-do-load-languages
+     'org-babel-load-languages
+     '((emacs-lisp . t)
+       (python . t)
+       (R . t)
+       (shell . t)))
+    (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
+    (add-to-list 'org-structure-template-alist '("py" . "src python"))
+    (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
+    (add-to-list 'org-structure-template-alist '("r" . "src R"))
+  
+    (use-package org-superstar
+      :hook (org-mode . (lambda () (org-superstar-mode 1))))
+  
+    (use-package ox-pandoc
+      :init
+      (setq org-pandoc-options-for-latex-pdf '((pdf-engine . "xelatex"))))
+  
+    (use-package org-ql)
+    :hook (org-mode . org-indent-mode)
     )
+  
 #+end_src
 * EVIL
 #+begin_src emacs-lisp
-
   (use-package evil
     :init
     (setq evil-want-keybinding nil)
     (setq evil-undo-system 'undo-tree)
     (setq evil-want-integration t)
+    (setq evil-respect-visual-line-mode t)
+    (setq evil-want-C-u-scroll t)
+    (setq evil-cros-lines t)
+  
+    :hook (evil-mode . visual-line-mode)
+  
     :config
     (evil-mode 1)
-    (evil-global-set-key 'motion "j" 'evil-next-visual-line)
-    (evil-global-set-key 'motion "k" 'evil-previous-visual-line))
-
+  
+    :general
+    ("C-M-u" 'universal-argument)
+    (:states '(normal motion)
+             "j" 'evil-next-visual-line
+             "k" 'evil-previous-visual-line
+             )
+    )
+  
   (use-package evil-collection
     :after evil
     :config
     (evil-collection-init))
-
+  
   (use-package evil-commentary
     :config
     (evil-commentary-mode 1))
-
+  
   (use-package evil-goggles
     :config
     (evil-goggles-mode 1))
-
+  
   (use-package evil-snipe)
   (use-package undo-tree
     :config
@@ -321,93 +330,121 @@
 #+begin_src emacs-lisp
   (use-package free-keys)
   (use-package which-key
+    :init (which-key-mode)
     :config
-    (which-key-mode 1))
-
+    (setq which-key-idle-delay 0.3))
+  
   (use-package helpful)
   (leader-key-def
     "h" 'helpful-at-point
     )
-
-  (use-package define-word)
-
-  (leader-key-def
-    "d" 'define-word-at-point
-    "D" 'define-word
-    )
-
+  
+  (use-package define-word
+    :general
+    (leader-key-def
+      "d" 'define-word-at-point
+      "D" 'define-word
+      ))
+  
+  ;; setup spellcheck from this blog post: http://blog.binchen.org/posts/what-s-the-best-spell-check-set-up-in-emacs/
+  ;; Does what I need it to do ¯\_(ツ)_/¯
+  (cond
+   ;; try hunspell at first
+   ;; if hunspell does NOT exist, use aspell
+   ((executable-find "hunspell")
+    (setq ispell-program-name "hunspell")
+    (setq ispell-local-dictionary "en_US")
+    (setq ispell-local-dictionary-alist
+          ;; Please note the list `("-d" "en_US")` contains ACTUAL parameters passed to hunspell
+          ;; You could use `("-d" "en_US,en_US-med")` to check with multiple dictionaries
+          '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8)))
+  
+    ;; new variable `ispell-hunspell-dictionary-alist' is defined in Emacs
+    ;; If it's nil, Emacs tries to automatically set up the dictionaries.
+    (when (boundp 'ispell-hunspell-dictionary-alist)
+      (setq ispell-hunspell-dictionary-alist ispell-local-dictionary-alist)))
+  
+   ((executable-find "aspell")
+    (setq ispell-program-name "aspell")
+    ;; Please note ispell-extra-args contains ACTUAL parameters passed to aspell
+    (setq ispell-extra-args '("--sug-mode=ultra" "--lang=en_US"))))
+  
 #+end_src
 * Navigation
 #+begin_src emacs-lisp
+  
   (use-package avy
-    :config
-    (general-def
-      "C-s" 'avy-goto-char-timer
-      ))
-
-  (general-nmap
-    "/" 'consult-line)
-
+    :general
+    ("C-s" 'avy-goto-char-timer)
+    )
+  
   (general-def
     "C-w m" 'maximize-window)
+  
   (use-package winum
+    :general
+    (
+     "M-1" 'winum-select-window-1
+     "M-2" 'winum-select-window-2
+     "M-3" 'winum-select-window-3
+     "M-4" 'winum-select-window-4
+     "M-5" 'winum-select-window-5
+     "M-6" 'winum-select-window-6
+     "M-7" 'winum-select-window-7
+     "M-8" 'winum-select-window-8
+     )
     :config
-    (general-def
-      "M-1" 'winum-select-window-1
-      "M-2" 'winum-select-window-2
-      "M-3" 'winum-select-window-3
-      "M-4" 'winum-select-window-4
-      "M-5" 'winum-select-window-5
-      "M-6" 'winum-select-window-6
-      "M-7" 'winum-select-window-7
-      "M-8" 'winum-select-window-8
-      )
     (winum-mode t))
-
+  
   (use-package yafolding)
+  
+  (use-package rg
+    :config
+    (rg-enable-default-bindings))
 #+end_src
 * Development
 ** Formatting
 #+begin_src emacs-lisp
   (use-package aggressive-indent
-    :config
-    (add-hook 'prog-mode-hook #'aggressive-indent-mode))
+    :hook (prog-mode . aggressive-indent-mode)
+    )
+  
   (use-package format-all
     :config
     (format-all-mode 1))
 #+end_src
 ** Version Control
 #+begin_src emacs-lisp
-  (use-package magit)
-  (leader-key-def
-    "g" 'magit-status
-    )
+  (use-package magit
+    :general
+    (leader-key-def
+      "g" 'magit-status
+      ))
 #+end_src
 ** Projects
 #+begin_src emacs-lisp
   (use-package projectile
     :config (projectile-mode)
     :init
-    (setq projectile-switch-project-action #'projectile-dired))
-
-  (leader-key-def
-    "p" 'projectile-command-map
-    )
-
+    (setq projectile-switch-project-action #'projectile-dired)
+    :general
+    (leader-key-def
+      "p" 'projectile-command-map
+      ))
 #+end_src
 ** Languages
 #+begin_src emacs-lisp
   (use-package toml-mode)
   (use-package fish-mode)
-  (use-package yaml-mode)
-  (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
+  (use-package yaml-mode
+    :mode "\\.yml\\'")
   (use-package rustic)
   (use-package nix-mode)
   
   (use-package ess)
   
-  (straight-use-package
-   '(kbd-mode :type git :host github :repo "kmonad/kbd-mode"))
+  (use-package kbd-mode
+    :straight (kbd-mode :type git :host github :repo "kmonad/kbd-mode"))
 #+end_src
 ** Syntax Checking
 #+begin_src emacs-lisp
@@ -417,31 +454,28 @@
 #+end_src
 ** Completion
 #+begin_src emacs-lisp
-  (use-package company)
-  (setq company-minimum-prefix-length 1
-        company-idle-delay 0.0) ;; default is 0.2
+  (use-package company
+    :init
+    (setq company-minimum-prefix-length 1
+          company-idle-delay 0.0) ;; default is 0.2
+    )
 #+end_src
 ** LSP
 #+begin_src emacs-lisp
   (use-package lsp-mode
     :init
-    ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+    (setq gc-cons-threshold 100000000) ;; set per the lsp-doctor recommendation
+    (setq read-process-output-max (* 1024 1024)) ;; same reason ^
     (setq lsp-keymap-prefix "C-c l")
-    :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+    :hook (
            (rustic-mode . lsp)
-           ;; if you want which-key integration
            (lsp-mode . lsp-enable-which-key-integration))
     :commands lsp)
-  
-  (setq gc-cons-threshold 100000000) ;; set per the lsp-doctor recommendation
-  (setq read-process-output-max (* 1024 1024)) ;; same reason ^
-  
   
   (use-package lsp-ui :commands lsp-ui-mode)
   (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
   
 #+end_src
-
 
 * local variables
 ;; Local Variables: 

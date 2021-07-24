@@ -65,7 +65,9 @@ in {
     alacritty
     qutebrowser
     freetube
+    minitube
     bemenu
+    mpv
     darktable
     hugin
     digikam
@@ -77,6 +79,9 @@ in {
     papirus-icon-theme
     gparted
     keepassxc
+
+    # Games
+    endless-sky
 
     # School
     discord
@@ -108,11 +113,15 @@ in {
     rage
     grobi
     gnumake
+    youtube-dl
+    oneshot
     cmake
     kmonad
     libtool
     libvterm
     pandoc
+    hunspell
+    hunspellDicts.en_US
     zoxide
     rpi-imager
     chezmoi

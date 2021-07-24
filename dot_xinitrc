@@ -1,7 +1,7 @@
 kmonad /home/ethan/.config/kmonad/t480.kbd &
 kmonad /home/ethan/.config/kmonad/external.kbd &
 
-feh --bg-scale /home/ethan/.background-image
+feh --bg-scale /home/ethan/media/pictures/wallpapers/pointDume2.tif
 
 grobi update
 

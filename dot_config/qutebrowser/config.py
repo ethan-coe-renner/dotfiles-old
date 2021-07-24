@@ -121,4 +121,5 @@ c.fonts.default_family = "Source Code Pro"
 c.fonts.default_size = "10pt"
 
 # theme-------------
-config.source("gruvbox-qutebrowser.py")
+# config.source("gruvbox.py")
+config.source("dracula.py")

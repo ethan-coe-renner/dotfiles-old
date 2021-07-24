@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # inspired by this script: https://github.com/gotbletu/shownotes/blob/master/urlportal.sh
 

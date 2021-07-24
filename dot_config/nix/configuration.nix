@@ -7,8 +7,13 @@ in {
   ];
 
   # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader = {
+    systemd-boot = {
+      enable = true;
+      configurationLimit = 10;
+    };
+    efi.canTouchEfiVariables = true;
+  };
 
   # networking.hostName = "nixos"; # Define your hostname.
 
@@ -30,6 +35,12 @@ in {
     keyMap = "dvorak";
   };
 
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+  };
+  nix.optimise.automatic = true;
+
   # Enable sound.
   sound.enable = true;
   hardware.pulseaudio = {
@@ -39,6 +50,7 @@ in {
   };
 
   programs = {
+    slock.enable = true;
     light.enable = true;
     ssh.startAgent = true;
     zsh = {
@@ -60,28 +72,40 @@ in {
   # $ nix search wget
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
-    # Graphical
-    firefox
-    alacritty
-    qutebrowser
-    freetube
-    minitube
-    bemenu
-    mpv
-    darktable
-    hugin
-    digikam
-    lxappearance
-    rawtherapee
-    pcmanfm
-    ungoogled-chromium
-    papirus-icon-theme
-    gparted
-    keepassxc
-    dracula-theme
-    libreoffice
-    geany
+    # Internet
     qbittorrent
+    oneshot
+
+    ## Browser
+    firefox qutebrowser ungoogled-chromium
+
+    # Media
+    freetube minitube youtube-dl mpv feh
+
+    # Terminal
+    alacritty tmux vim neovim taskwarrior newsboat
+
+    ## Shell
+    tealdeer zoxide starship exa tree dust fd skim bat age rage rclone pandoc
+
+    # Backup
+    chezmoi restic
+
+    # Photography
+    darktable hugin digikam rawtherapee
+
+    # GUI
+    ## Utilities
+    bemenu gparted pcmanfm keepassxc xclip xorg.xbacklight grobi kmonad
+
+    ## Appearance
+    lxappearance papirus-icon-theme dracula-theme font-manager
+
+    # Audio
+    ncmpcpp mpc_cli pamixer
+
+    # Productivity
+    libreoffice hunspell hunspellDicts.en_US
 
     # Games
     endless-sky
@@ -89,65 +113,8 @@ in {
     # School
     discord
 
-    # Terminal
-    vim
-    tmux
-    ncmpcpp
-    neovim
-    taskwarrior
-
     # Programming
-    python3
-    gcc
-    rustup
-    nixfmt
-    nodePackages.prettier
-
-    # Utilities
-    git
-    xclip
-    xlockmore
-    stow
-    restic
-    mpc_cli
-    xorg.xbacklight
-    tree
-    age
-    rage
-    grobi
-    gnumake
-    youtube-dl
-    oneshot
-    cmake
-    kmonad
-    libtool
-    libvterm
-    pandoc
-    hunspell
-    hunspellDicts.en_US
-    zoxide
-    rpi-imager
-    chezmoi
-    exa
-    feh
-    go-task
-    dust
-    fd
-    skim
-    grex
-    bat
-    ripgrep
-    ripgrep-all
-    ion
-    nushell
-    elvish
-    starship
-    rclone
-    newsboat
-    tealdeer
-    pamixer
-    coreutils
-    clang
+    python3 gcc rustup nixfmt nodePackages.prettier git gnumake cmake go-task clang coreutils libtool grex ripgrep ripgrep-all
   ];
   fonts.fonts = with pkgs; [ noto-fonts source-code-pro ];
   powerManagement.powertop.enable = true;

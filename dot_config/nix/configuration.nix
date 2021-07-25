@@ -80,13 +80,13 @@ in {
     firefox qutebrowser ungoogled-chromium
 
     # Media
-    freetube minitube youtube-dl mpv feh
+    freetube minitube youtube-dl mpv feh ytmdesktop
 
     # Terminal
     alacritty tmux vim neovim taskwarrior newsboat
 
     ## Shell
-    tealdeer zoxide starship exa tree dust fd skim bat age rage rclone pandoc
+    tealdeer zoxide starship exa tree dust fd skim bat age rage rclone pandoc bottom
 
     # Backup
     chezmoi restic
@@ -96,7 +96,7 @@ in {
 
     # GUI
     ## Utilities
-    bemenu gparted pcmanfm keepassxc xclip xorg.xbacklight grobi kmonad
+    bemenu gparted pcmanfm keepassxc xclip xorg.xbacklight grobi kmonad virtualbox
 
     ## Appearance
     lxappearance papirus-icon-theme dracula-theme font-manager
@@ -105,7 +105,7 @@ in {
     ncmpcpp mpc_cli pamixer
 
     # Productivity
-    libreoffice hunspell hunspellDicts.en_US
+    libreoffice hunspell hunspellDicts.en_US gnuplot
 
     # Games
     endless-sky
@@ -115,6 +115,9 @@ in {
 
     # Programming
     python3 gcc rustup nixfmt nodePackages.prettier git gnumake cmake go-task clang coreutils libtool grex ripgrep ripgrep-all
+
+    # Temporary
+    hello
   ];
   fonts.fonts = with pkgs; [ noto-fonts source-code-pro ];
   powerManagement.powertop.enable = true;

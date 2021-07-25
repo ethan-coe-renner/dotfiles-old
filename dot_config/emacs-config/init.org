@@ -85,10 +85,11 @@
 #+begin_src emacs-lisp
   (use-package rainbow-delimiters
     :hook (prog-mode . rainbow-delimiters-mode))
-  
+
   (show-paren-mode 1)
   (electric-pair-mode 1)
   (setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit)
+
 #+end_src
 ** Line Number Setup
 #+begin_src emacs-lisp
@@ -178,7 +179,7 @@
   (use-package consult
     :general
     (leader-key-def
-      "s" 'consult-line
+      "/" 'consult-line
       "b" 'consult-buffer
       "r" 'consult-recent-file
       "i" 'consult-imenu
@@ -234,6 +235,11 @@
   (use-package ws-butler
     :hook ((text-mode . ws-butler-mode)
            (prog-mode . ws-butler-mode)))
+#+end_src
+* PDF
+#+begin_src emacs-lisp
+  (use-package pdf-tools)
+  (pdf-tools-install)
 #+end_src
 * Terminals
 #+begin_src emacs-lisp
@@ -293,12 +299,12 @@
     (setq evil-respect-visual-line-mode t)
     (setq evil-want-C-u-scroll t)
     (setq evil-cros-lines t)
-  
+
     :hook (evil-mode . visual-line-mode)
-  
+
     :config
     (evil-mode 1)
-  
+
     :general
     ("C-M-u" 'universal-argument)
     (:states '(normal motion)
@@ -306,25 +312,29 @@
              "k" 'evil-previous-visual-line
              )
     )
-  
+
   (use-package evil-collection
     :after evil
     :config
     (evil-collection-init))
-  
+
   (use-package evil-commentary
     :config
     (evil-commentary-mode 1))
-  
+
   (use-package evil-goggles
     :config
     (evil-goggles-mode 1))
-  
+
   (use-package evil-snipe)
   (use-package undo-tree
     :config
     (global-undo-tree-mode 1)
     )
+
+  (use-package evil-surround
+    :config
+    (global-evil-surround-mode 1))
 #+end_src
 * Help
 #+begin_src emacs-lisp
@@ -440,9 +450,15 @@
     :mode "\\.yml\\'")
   (use-package rustic)
   (use-package nix-mode)
-  
+
+  (use-package gnuplot)
+  (autoload 'gnuplot-mode "gnuplot" "Gnuplot major mode" t)
+  (autoload 'gnuplot-make-buffer "gnuplot" "open a buffer in gnuplot-mode" t)
+  (setq auto-mode-alist (append '(("\\.gp$" . gnuplot-mode)) auto-mode-alist))
+
+
   (use-package ess)
-  
+
   (use-package kbd-mode
     :straight (kbd-mode :type git :host github :repo "kmonad/kbd-mode"))
 #+end_src

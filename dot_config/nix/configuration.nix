@@ -2,9 +2,7 @@
 
 let kmonad = import /home/ethan/.local/share/chezmoi/dot_config/nix/kmonad.nix;
 in {
-  imports = [
-    /etc/nixos/hardware-configuration.nix
-  ];
+  imports = [ /etc/nixos/hardware-configuration.nix ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader = {
@@ -30,16 +28,15 @@ in {
   networking.interfaces.wlp3s0.useDHCP = true;
 
   i18n.defaultLocale = "en_US.UTF-8";
-  console = {
-    font = "Source Code Pro 18";
-    keyMap = "dvorak";
-  };
+  console = { keyMap = "dvorak"; };
 
   nix.gc = {
     automatic = true;
     dates = "weekly";
   };
   nix.optimise.automatic = true;
+
+  nix.trustedUsers = [ "root" "ethan" ];
 
   # Enable sound.
   sound.enable = true;
@@ -53,9 +50,7 @@ in {
     slock.enable = true;
     light.enable = true;
     ssh.startAgent = true;
-    zsh = {
-      enable = true;
-    };
+    zsh = { enable = true; };
   };
 
   users.mutableUsers = false;
@@ -77,56 +72,113 @@ in {
     oneshot
 
     ## Browser
-    firefox qutebrowser ungoogled-chromium
+    firefox
+    qutebrowser
+    ungoogled-chromium
 
     # Media
-    freetube minitube youtube-dl mpv feh ytmdesktop
+    freetube
+    minitube
+    youtube-dl
+    mpv
+    feh
+    sxiv
 
     # Terminal
-    alacritty tmux vim neovim taskwarrior newsboat
+    alacritty
+    tmux
+    vim
+    neovim
+    taskwarrior
+    taskwarrior-tui
+    newsboat
 
     ## Shell
-    tealdeer zoxide starship exa tree dust fd skim bat age rage rclone pandoc bottom
+    tealdeer
+    zoxide
+    starship
+    exa
+    tree
+    dust
+    fd
+    skim
+    bat
+    age
+    rage
+    rclone
+    pandoc
+    bottom
 
     # Backup
-    chezmoi restic
+    chezmoi
+    restic
 
     # Photography
-    darktable hugin digikam rawtherapee
+    darktable
+    hugin
+    digikam
+    rawtherapee
 
     # GUI
     ## Utilities
-    bemenu gparted pcmanfm keepassxc xclip xorg.xbacklight grobi kmonad virtualbox
+    bemenu
+    gparted
+    pcmanfm
+    keepassxc
+    xclip
+    xorg.xbacklight
+    grobi
+    kmonad
+    virtualbox
 
     ## Appearance
-    lxappearance papirus-icon-theme dracula-theme font-manager
+    lxappearance
+    papirus-icon-theme
+    dracula-theme
+    font-manager
 
     # Audio
-    ncmpcpp mpc_cli pamixer
+    ncmpcpp
+    mpc_cli
+    pamixer
+    ytmdesktop
 
     # Productivity
-    libreoffice hunspell hunspellDicts.en_US gnuplot
+    libreoffice
+    zathura
+    hunspell
+    hunspellDicts.en_US
+    gnuplot
 
     # Games
     endless-sky
+    cataclysm-dda
 
     # School
     discord
 
     # Programming
-    python3 gcc rustup nixfmt nodePackages.prettier git gnumake cmake go-task clang coreutils libtool grex ripgrep ripgrep-all
+    python3
+    gcc
+    rustup
+    nixfmt
+    nodePackages.prettier
+    git
+    gnumake
+    cmake
+    go-task
+    clang
+    coreutils
+    libtool
+    grex
+    ripgrep
+    ripgrep-all
 
     # Temporary
     hello
   ];
   fonts.fonts = with pkgs; [ noto-fonts source-code-pro ];
   powerManagement.powertop.enable = true;
-
-  nixpkgs.overlays = [
-    (import (builtins.fetchTarball {
-      url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
-    }))
-  ];
 
   services = {
     xserver = {
@@ -147,7 +199,6 @@ in {
     emacs = {
       enable = true;
       defaultEditor = true;
-      package = pkgs.emacsGcc;
     };
     chrony.enable = true;
     fwupd.enable = true;
@@ -168,7 +219,6 @@ in {
       };
     };
   };
-
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

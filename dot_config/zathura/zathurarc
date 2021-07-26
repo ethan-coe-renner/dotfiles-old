@@ -43,7 +43,7 @@ set recolor-darkcolor           "#f8f8f2" # Foreground
 # Startup options
 #
 set adjust-open width
-set recolor true
+set recolor false
 
 set font	"Source Code Pro 9"
 set window-title-basename	"true"

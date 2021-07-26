@@ -15,9 +15,9 @@
         (goto-char (point-max))
         (eval-print-last-sexp)))
     (load bootstrap-file nil 'nomessage))
-  
+
   (straight-use-package 'use-package)
-  (setq straight-use-package-by-default t)
+  ;; (setq straight-use-package-by-default t)
 #+end_src
 * Custom Setup
 #+begin_src emacs-lisp
@@ -42,7 +42,10 @@
 #+begin_src emacs-lisp
   (use-package doom-themes
     :config (load-theme 'doom-dracula t))
-  
+
+  (use-package solaire-mode
+    :config (solaire-global-mode +1))
+
   (use-package rainbow-mode
     :hook web-mode)
 #+end_src
@@ -55,13 +58,19 @@
 #+end_src
 ** Modeline
 #+begin_src emacs-lisp
-  (use-package doom-modeline
+  ;; (use-package doom-modeline
+  ;;   :init
+  ;;   (setq all-the-icons-scale-factor 1.1)
+  ;;   :config
+  ;;   (setq doom-modeline-icon t)
+  ;;   (doom-modeline-mode))
+
+  (use-package smart-mode-line
     :init
-    (setq all-the-icons-scale-factor 1.1)
+    (setq sml/no-confirm-load-theme t)
+
     :config
-    (setq doom-modeline-icon t)
-    (doom-modeline-mode))
-  
+    (sml/setup))
 #+end_src
 ** Dashboard
 #+begin_src emacs-lisp
@@ -289,6 +298,10 @@
     )
   
 #+end_src
+* Literate Calc
+ #+begin_src emacs-lisp
+   (use-package literate-calc-mode)
+ #+end_src
 * EVIL
 #+begin_src emacs-lisp
   (use-package evil
@@ -326,7 +339,17 @@
     :config
     (evil-goggles-mode 1))
 
-  (use-package evil-snipe)
+  (use-package evil-snipe
+    :general
+    (:states '(normal motion)
+             "s" 'evil-snipe-s
+             "S" 'evil-snipe-S)
+    )
+
+  (use-package evil-multiedit
+    :config
+    (evil-multiedit-default-keybinds)
+    )
   (use-package undo-tree
     :config
     (global-undo-tree-mode 1)
@@ -382,15 +405,15 @@
 #+end_src
 * Navigation
 #+begin_src emacs-lisp
-  
+
   (use-package avy
     :general
     ("C-s" 'avy-goto-char-timer)
     )
-  
+
   (general-def
     "C-w m" 'maximize-window)
-  
+
   (use-package winum
     :general
     (
@@ -405,9 +428,12 @@
      )
     :config
     (winum-mode t))
-  
+
   (use-package yafolding)
-  
+
+  (use-package smartscan
+    :hook (prog-mode . smartscan-mode))
+
   (use-package rg
     :config
     (rg-enable-default-bindings))
@@ -450,6 +476,7 @@
     :mode "\\.yml\\'")
   (use-package rustic)
   (use-package nix-mode)
+  (use-package json-mode)
 
   (use-package gnuplot)
   (autoload 'gnuplot-mode "gnuplot" "Gnuplot major mode" t)

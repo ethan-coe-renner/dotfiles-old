@@ -15,9 +15,9 @@
         (goto-char (point-max))
         (eval-print-last-sexp)))
     (load bootstrap-file nil 'nomessage))
-
+  
   (straight-use-package 'use-package)
-  ;; (setq straight-use-package-by-default t)
+  (setq straight-use-package-by-default t)
 #+end_src
 * Custom Setup
 #+begin_src emacs-lisp
@@ -41,10 +41,7 @@
 ** Theme
 #+begin_src emacs-lisp
   (use-package doom-themes
-    :config (load-theme 'doom-dracula t))
-
-  (use-package solaire-mode
-    :config (solaire-global-mode +1))
+    :config (load-theme 'doom-one-light t))
 
   (use-package rainbow-mode
     :hook web-mode)
@@ -58,19 +55,12 @@
 #+end_src
 ** Modeline
 #+begin_src emacs-lisp
-  ;; (use-package doom-modeline
-  ;;   :init
-  ;;   (setq all-the-icons-scale-factor 1.1)
-  ;;   :config
-  ;;   (setq doom-modeline-icon t)
-  ;;   (doom-modeline-mode))
-
-  (use-package smart-mode-line
+  (use-package doom-modeline
     :init
-    (setq sml/no-confirm-load-theme t)
-
+    (setq all-the-icons-scale-factor 1.1)
     :config
-    (sml/setup))
+    (setq doom-modeline-icon t)
+    (doom-modeline-mode))
 #+end_src
 ** Dashboard
 #+begin_src emacs-lisp
@@ -200,36 +190,6 @@
     (marginalia-mode)
     (setq marginalia-annotators '(marginalia-annotators-heavy))
     )
-
-  (use-package embark
-    :ensure t
-
-    :bind
-    (("C-S-a" . embark-act)       ;; pick some comfortable binding
-     ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
-
-    :init
-
-    ;; Optionally replace the key help with a completing-read interface
-    (setq prefix-help-command #'embark-prefix-help-command)
-
-    :config
-
-    ;; Hide the mode line of the Embark live/completions buffers
-    (add-to-list 'display-buffer-alist
-                 '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
-                   nil
-                   (window-parameters (mode-line-format . none)))))
-
-  ;; Consult users will also want the embark-consult package.
-  (use-package embark-consult
-    :ensure t
-    :after (embark consult)
-    :demand t ; only necessary if you have the hook below
-    ;; if you want to have consult previews as you move around an
-    ;; auto-updating embark collect buffer
-    :hook
-    (embark-collect-mode . embark-consult-preview-minor-mode))
 #+end_src
 * Misc
 #+begin_src emacs-lisp
@@ -405,7 +365,6 @@
 #+end_src
 * Navigation
 #+begin_src emacs-lisp
-
   (use-package avy
     :general
     ("C-s" 'avy-goto-char-timer)
@@ -428,8 +387,6 @@
      )
     :config
     (winum-mode t))
-
-  (use-package yafolding)
 
   (use-package smartscan
     :hook (prog-mode . smartscan-mode))
@@ -497,11 +454,64 @@
 #+end_src
 ** Completion
 #+begin_src emacs-lisp
-  (use-package company
+  ;; (use-package company
+  ;;   :init
+  ;;   (setq company-minimum-prefix-length 1
+  ;;         company-idle-delay 0.0) ;; default is 0.2
+  ;;   )
+
+  (use-package corfu
+    ;; Optional customizations
+    :custom
+    (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
+    (corfu-auto t)                 ;; Enable auto completion
+    ;; (corfu-commit-predicate nil)   ;; Do not commit selected candidates on next input
+    ;; (corfu-quit-at-boundary t)     ;; Automatically quit at word boundary
+    ;; (corfu-quit-no-match t)        ;; Automatically quit if there is no match
+    ;; (corfu-echo-documentation nil) ;; Do not show documentation in the echo area
+
+    ;; Optionally use TAB for cycling, default is `corfu-complete'.
+    :bind (:map corfu-map
+           ("TAB" . corfu-next)
+           ([tab] . corfu-next)
+           ("S-TAB" . corfu-previous)
+           ([backtab] . corfu-previous))
+
+    ;; Recommended: Enable Corfu globally.
+    ;; This is recommended since dabbrev can be used globally (M-/).
     :init
-    (setq company-minimum-prefix-length 1
-          company-idle-delay 0.0) ;; default is 0.2
-    )
+    (corfu-global-mode))
+
+  ;; Optionally use the `orderless' completion style.
+  ;; Enable `partial-completion' for files to allow path expansion.
+  ;; You may prefer to use `initials' instead of `partial-completion'.
+  (use-package orderless
+    :init
+    (setq completion-styles '(orderless)
+          completion-category-defaults nil
+          completion-category-overrides '((file (styles . (partial-completion))))))
+
+  ;; Dabbrev works with Corfu
+  (use-package dabbrev
+    ;; Swap M-/ and C-M-/
+    :bind (("M-/" . dabbrev-completion)
+           ("C-M-/" . dabbrev-expand)))
+
+  ;; A few more useful configurations...
+  (use-package emacs
+    :init
+    ;; TAB cycle if there are only few candidates
+    (setq completion-cycle-threshold 3)
+
+    ;; Emacs 28: Hide commands in M-x which do not work in the current mode.
+    ;; Corfu commands are hidden, since they are not supposed to be used via M-x.
+    ;; (setq read-extended-command-predicate
+    ;;       #'command-completion-default-include-p)
+
+    ;; Enable indentation+completion using the TAB key.
+    ;; `completion-at-point' is often bound to M-TAB.
+    (setq tab-always-indent 'complete))
+
 #+end_src
 ** LSP
 #+begin_src emacs-lisp

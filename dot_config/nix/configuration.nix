@@ -141,7 +141,6 @@ in {
     ncmpcpp
     mpc_cli
     pamixer
-    ytmdesktop
 
     # Productivity
     libreoffice

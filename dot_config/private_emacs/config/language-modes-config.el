@@ -3,8 +3,8 @@
 (use-package toml-mode :straight t)
 (use-package yaml-mode :straight t
   :mode "\\.yml\\'")
-(use-package rustic :straight t)
-(use-package nix-mode :straight t)
+;; (use-package rustic :straight t)
+;; (use-package nix-mode :straight t)
 (use-package json-mode :straight t)
 
 (use-package gnuplot :straight t

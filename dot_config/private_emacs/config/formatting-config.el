@@ -4,7 +4,7 @@
   :hook (prog-mode . aggressive-indent-mode)
   )
 
-(use-package format-all
-  :straight t
-  :config
-  (format-all-mode 1))
+;; (use-package format-all
+;;   :straight t
+;;   :config
+;;   (format-all-mode 1))

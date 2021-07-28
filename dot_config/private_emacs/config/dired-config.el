@@ -12,8 +12,8 @@
 
 (use-package all-the-icons-dired
   :straight t
-  :hook (dired-mode . all-the-icons-dired-mode))
-
+  :hook
+  (dired-mode . all-the-icons-dired-mode))
 
 (use-package dired-x
   :general

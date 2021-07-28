@@ -12,6 +12,8 @@
 ;; Set the fixed pitch face
 (set-face-attribute 'fixed-pitch nil :font "Source Code Pro" :height 120)
 
+(setq custom-file "~/.config/emacs-config/custom.el")
+(load custom-file)
 (use-package doom-themes
   :straight t
   :config

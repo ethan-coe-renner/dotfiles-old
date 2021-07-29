@@ -91,7 +91,6 @@ in {
     neovim
     taskwarrior
     taskwarrior-tui
-    newsboat
 
     ## Shell
     tealdeer

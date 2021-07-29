@@ -199,12 +199,20 @@ setup evil and related packages
 #+begin_src emacs-lisp
   (use-package evil
     :straight t
+    :init
+    (global-visual-line-mode 1)
     :custom
     (evil-undo-system 'undo-fu)
     (evil-want-keybinding nil)
+    (evil-want-C-u-scroll t)
+    (evil-respect-visual-line-mode t)
 
     :config
     (evil-mode 1)
+    (general-def
+      "C-M-u" 'universal-argument ;; doesn't work with :general for some reason
+      )
+
     (use-package undo-fu :straight t)
     (use-package evil-collection
       :straight t

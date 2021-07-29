@@ -1,8 +1,5 @@
 #!/bin/sh
 
-# This script bootstraps my emacs configuration, sets up doom emacs, and sets up chemacs to switch between them.
+# This script tangles my emacs config, so that I don't need the resulting init file in source control
 
-[ ! -d ~/.local/share/doom-emacs ] && git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.local/share/doom-emacs && ~/.local/share/doom-emacs/bin/doom install || echo "doom-emacs already initialized"
-
-[ ! -f ~/.emacs.d/chemacs.el ] && git clone https://github.com/plexus/chemacs2.git ~/.emacs.d || echo "chemacs already initialized" 
-
+emacs --batch --eval "(require 'org)" --eval '(org-babel-tangle-file "~/.local/share/chezmoi/dot_emacs.d/emacs.org")' && echo "Succesfully tangled emacs config" || echo "Something went wrong tangling emacs config"

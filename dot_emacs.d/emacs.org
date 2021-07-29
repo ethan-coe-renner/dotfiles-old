@@ -28,6 +28,15 @@ This section is for miscelaneous settings which do not belong elsewhere, everyth
   (load custom-file)
 #+end_src
 
+* Backup
+#+begin_src emacs-lisp
+  (setq backup-directory-alist `(("." . "~/.saves")))
+  (setq backup-by-copying t)
+  (setq delete-old-versions t
+	kept-new-versions 6
+	kept-old-versions 2
+	version-control t)
+#+end_src
 * General
 This section sets up [[https://github.com/noctuid/general.el][general.el]]. This section should not be used to set keybindings (except for the most general ones).
 Keybindings should go with their respective packages.
@@ -68,6 +77,7 @@ Keybindings should go with their respective packages.
     :init
     (leader-key-def
       "<SPC>" 'dired-jump
+      "m" '(lambda () (interactive) (find-file "~/.local/share/chezmoi/dot_emacs.d/emacs.org"))
       ))
 
   (global-auto-revert-mode)
@@ -159,7 +169,31 @@ Configuration and setup for eshell
       (switch-to-buffer (other-buffer buf))
       (switch-to-buffer-other-window buf)))
 #+end_src
+* Org Mode
+#+begin_src emacs-lisp
+  (use-package org
+    :init
+    (setq org-confirm-babel-evaluate nil)
+    (setq org-src-window-setup 'current-window)
+    (setq org-ellipsis " ▾")
+    (setq org-M-RET-may-split-line nil)
+    (setq org-latex-pdf-process '("texi2dvi -p -b -V %f"))
 
+    (require 'org-tempo)
+    :config
+    (org-babel-do-load-languages
+     'org-babel-load-languages
+     '((emacs-lisp . t)
+       ))
+    (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
+
+    (use-package org-superstar
+      :straight t
+      :hook (org-mode . (lambda () (org-superstar-mode 1))))
+
+    :hook (org-mode . org-indent-mode)
+    )
+#+end_src
 * EVIL
 setup evil and related packages
 #+begin_src emacs-lisp

@@ -1,12 +1,12 @@
 PATH=$PATH:~/.local/bin:~/.cargo/bin
-export EDITOR="emacsclient -c"
+export EDITOR="emacsclient"
 export TERMINAL="alacritty"
 export BROWSER="qutebrowser"
 
 export RESTIC_REPOSITORY="/home/ethan/.bak"
 export RESTIC_PASSWORD_FILE="/home/ethan/.restic/psswd"
 
-export SUDO_EDITOR="emacsclient -c"
+export SUDO_EDITOR="emacsclient"
 
 export BEMENU_OPTS="bemenu-run -b -l 5 --fn 'Source Code Pro' -p ':' --tb '#6272a4' --tf '#f8f8f2' --fb '#282a36' --ff '#f8f8f2' --nb '#282a36' --nf '#6272a4' --hb '#44475a' --hf '#50fa7b' --sb '#44475a' --sf '#50fa7b' --scb '#282a36' --scf '#ff79c6'"
 

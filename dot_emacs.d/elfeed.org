@@ -1,12 +1,15 @@
 * Imported Feeds            :elfeed:
-** [[http://daviddfriedman.blogspot.com/atom.xml][Ideas]]
-** [[http://www.econlib.org/feed/indexCaplan_xml][Econlib]]
-** [[https://nullprogram.com/feed/][null program]]
-** [[https://feeds.feedburner.com/mrmoneymustache][Mr. Money Mustache]]
-** [[https://astralcodexten.substack.com/feed][Astral Codex Ten]]
-** [[https://www.singlelunch.com/feed][Single Lunch]]
-** [[https://www.overcomingbias.com/feed][Overcoming Bias]]
-** [[https://planet.emacslife.com/atom.xml][Planet Emacslife]]
-** [[https://www.lesswrong.com/feed.xml?view=curated-rss][LessWrong]]
-** [[https://xkcd.com/rss.xml][xkcd.com]]
-** [[https://www.monkeyuser.com/feed.xml][MonkeyUser]]
+** Blogs :Blog:
+*** [[http://daviddfriedman.blogspot.com/atom.xml][Ideas]]
+*** [[http://www.econlib.org/feed/indexCaplan_xml][Econlib]]
+*** [[https://nullprogram.com/feed/][null program]]
+*** [[https://feeds.feedburner.com/mrmoneymustache][Mr. Money Mustache]]
+*** [[https://astralcodexten.substack.com/feed][Astral Codex Ten]]
+*** [[https://www.singlelunch.com/feed][Single Lunch]]
+*** [[https://www.overcomingbias.com/feed][Overcoming Bias]]
+*** [[https://planet.emacslife.com/atom.xml][Planet Emacslife]]
+** Fora :Forum:
+*** [[https://www.lesswrong.com/feed.xml?view=curated-rss][LessWrong]]
+** Comics :Comic:
+*** [[https://xkcd.com/rss.xml][xkcd.com]]
+*** [[https://www.monkeyuser.com/feed.xml][MonkeyUser]]

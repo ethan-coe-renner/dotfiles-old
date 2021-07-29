@@ -24,7 +24,6 @@ This section is for miscelaneous settings which do not belong elsewhere, everyth
 #+begin_src emacs-lisp
   ;; set specific location for custom settings
   (setq custom-file "~/.emacs.d/custom.el")
-  ;; TODO set custom file
   (load custom-file)
 #+end_src
 
@@ -259,18 +258,19 @@ setup evil and related packages
   (use-package helpful
     :straight t
     :general
-    (leader-key-def
-      "h" 'helpful-at-point
-      )
+    ("C-h f" 'helpful-callable
+     "C-h v" 'helpful-variable
+     "C-h k" 'helpful-key
+     "C-c C-h" 'helpful-at-point
+     )
     )
 
   (use-package define-word
     :straight t
     :general
-    (leader-key-def
-      "d" 'define-word-at-point
-      "D" 'define-word
-      ))
+    (
+     "C-h C-w" 'define-word-at-point
+     ))
 #+end_src
 
 * Editing

@@ -1,5 +1,5 @@
 PATH=$PATH:~/.local/bin:~/.cargo/bin
-export EDITOR="nvim"
+export EDITOR="emacsclient -c"
 export TERMINAL="alacritty"
 export BROWSER="qutebrowser"
 

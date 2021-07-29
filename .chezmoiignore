@@ -1,5 +1,4 @@
 .config/newsboat/urls.json
-.config/emacs-config/init.org
 .config/zsh
 .config/zsh/*
 .config/nix

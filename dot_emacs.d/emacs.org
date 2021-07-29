@@ -273,6 +273,36 @@ setup evil and related packages
      ))
 #+end_src
 
+* Elfeed
+Setup for [[https://github.com/skeeto/elfeed][Elfeed]], an RSS reader
+#+begin_src emacs-lisp
+  (use-package elfeed
+    :straight t
+    :custom
+    (elfeed-feeds
+     '(
+       ;; Blogs
+       ("http://daviddfriedman.blogspot.com/atom.xml" blog)
+       ("http://www.econlib.org/feed/indexCaplan_xml" blog)
+       ("https://nullprogram.com/feed/" blog)
+       ("https://feeds.feedburner.com/mrmoneymustache" blog)
+       ("https://astralcodexten.substack.com/feed" blog)
+       ("https://www.singlelunch.com/feed" blog)
+       ("https://www.overcomingbias.com/feed" blog)
+       ("https://planet.emacslife.com/atom.xml" blog)
+
+       ;; Fora
+       ("https://www.lesswrong.com/feed.xml?view=curated-rss" forum)
+
+       ;; Comics
+       ("https://xkcd.com/rss.xml" comic)
+       ("https://www.monkeyuser.com/feed.xml" comic)
+       ))
+    :general
+    ("C-x w" 'elfeed)
+    )
+#+end_src
+
 * Editing
 This section contains packages and settings for
 non-evil specific editing
@@ -342,10 +372,7 @@ Setup git integration
 #+begin_src emacs-lisp
   (use-package magit
     :straight t
-    :general
-    (leader-key-def
-      "g" 'magit-status
-      ))
+    )
 #+end_src
 
 * Project Management

@@ -19,15 +19,20 @@
   (straight-use-package 'use-package)
   ;; (setq use-package-verbose t)
 #+end_src
-* Emacs
-This section is for miscellaneous settings which do not belong elsewhere, everything should be commented.
+* Custom Settings
+Set seperate custom file so that custom settings don't get overwritten by org-babel-tangle.
 #+begin_src emacs-lisp
-  ;; set specific location for custom settings
   (setq custom-file "~/.emacs.d/custom.el")
   (load custom-file)
-
+#+end_src
+* Emacs
+This section is for miscellaneous settings which do not belong elsewhere, everything should be commented explaining why it was added.
+#+begin_src emacs-lisp
   ;; clean scratch buffer
   (setq initial-scratch-message nil)
+
+  ;; fix sizing errors with tiling window managers
+  (setq frame-resize-pixelwise t)
 #+end_src
 
 * Backup
@@ -59,8 +64,8 @@ Keybindings should go with their respective packages.
 * Dired
 #+begin_src emacs-lisp
   (use-package dired
-    :config
-    (setq dired-listing-switches "-agho --group-directories-first")
+    :custom
+    (dired-listing-switches "-agho --group-directories-first")
     :general
     (general-def
       :states 'normal
@@ -184,12 +189,12 @@ Configuration and setup for eshell
 #+begin_src emacs-lisp
   (use-package org
     :defer t
-    :init
-    (setq org-confirm-babel-evaluate nil)
-    (setq org-src-window-setup 'current-window)
-    (setq org-ellipsis " ▾")
-    (setq org-M-RET-may-split-line nil)
-    (setq org-latex-pdf-process '("texi2dvi -p -b -V %f"))
+    :custom
+    (org-confirm-babel-evaluate nil)
+    (org-src-window-setup 'current-window)
+    (org-ellipsis " ▾")
+    (org-M-RET-may-split-line nil)
+    (org-latex-pdf-process '("texi2dvi -p -b -V %f"))
 
     (require 'org-tempo)
     :config
@@ -215,7 +220,7 @@ setup evil and related packages
     (global-visual-line-mode 1)
     :custom
     (evil-undo-system 'undo-fu)
-    (evil-want-keybinding nil)
+    (evil-want-keybinding nil) ;; needed for evil-collection
     (evil-want-C-u-scroll t)
     (evil-respect-visual-line-mode t)
 
@@ -266,8 +271,8 @@ setup evil and related packages
     :defer t
     :straight t
     :init (which-key-mode)
-    :config
-    (setq which-key-idle-delay 0.3))
+    :custom
+    (which-key-idle-delay 0.3))
 
   (use-package helpful
     :straight t
@@ -318,6 +323,8 @@ Setup for [[https://github.com/skeeto/elfeed][Elfeed]], an RSS reader
     (use-package elfeed-goodies
       :straight t
       :after elfeed
+      :custom
+      (byte-compile-warnings '(cl-functions)) ;; supress warning about cl.el deprecation
       :config
       (elfeed-goodies/setup)
       )
@@ -445,9 +452,9 @@ Set up checkers, i.e. syntax checking, spell checkers, etc
   (use-package company
     :defer t
     :straight t
-    :init
-    (setq company-minimum-prefix-length 1
-          company-idle-delay 0.0) ;; default is 0.2
+    :custom
+    (company-minimum-prefix-length 1)
+    (company-idle-delay 0.0) ;; default is 0.2
     :config
     (global-company-mode)
     )
@@ -457,10 +464,10 @@ Set up checkers, i.e. syntax checking, spell checkers, etc
 #+begin_src emacs-lisp
   (use-package lsp-mode
     :straight t
-    :init
-    (setq gc-cons-threshold 100000000) ;; set per the lsp-doctor recommendation
-    (setq read-process-output-max (* 1024 1024)) ;; same reason ^
-    (setq lsp-keymap-prefix "C-c l")
+    :custom
+    (gc-cons-threshold 100000000) ;; set per the lsp-doctor recommendation
+    (read-process-output-max (* 1024 1024)) ;; same reason ^
+    (lsp-keymap-prefix "C-c l")
     :hook (
            (rustic-mode . lsp)
            (lsp-mode . lsp-enable-which-key-integration))
@@ -492,6 +499,23 @@ Set gui settings, theme, fonts, etc
     :straight t
     :config (load-theme 'doom-one t))
 
+  ;; dashboard
+  (use-package dashboard
+    :straight t
+    :custom
+    (initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
+    (dashboard-startup-banner 'official)
+    (dashboard-set-heading-icons t)
+    (dashboard-set-file-icons t)
+    (dashboard-set-init-info t)
+    (dashboard-center-content t)
+    (dashboard-items '((bookmarks . 5)
+                       (projects . 5)))
+
+    :config
+    (dashboard-setup-startup-hook))
+
+
   ;; font
   (set-face-attribute 'default nil :font "Source Code Pro" :height 120)
   (set-face-attribute 'fixed-pitch nil :font "Source Code Pro" :height 120)
@@ -504,10 +528,38 @@ Set gui settings, theme, fonts, etc
     (add-hook mode (lambda () (display-line-numbers-mode 1))))
 
   ;; modeline
-  (use-package smart-mode-line
+  (use-package doom-modeline
     :straight t
+    :custom
+    (all-the-icons-scale-factor 1.1)
+    (doom-modeline-icon t)
     :config
-    (sml/setup))
+    (doom-modeline-mode))
+
+
+  ;; tabs
+  (use-package centaur-tabs
+    :demand
+    :straight t
+    :custom
+    (centaur-tabs-style "alternate")
+    (centaur-tabs-set-icons t)
+    (centaur-tabs-gray-out-icons 'buffer)
+    (centaur-tabs-set-bar 'over)
+    (centaur-tabs-set-close-button nil)
+    (centaur-tabs-show-new-tab-button nil)
+    :hook
+    (dired-mode . centaur-tabs-local-mode)
+    :config
+    (centaur-tabs-mode t)
+    (centaur-tabs-group-by-projectile-project)
+    :general
+    ("C-<prior>" 'centaur-tabs-backward)
+    ("C-<next>" 'centaur-tabs-forward)
+    (:states 'normal
+             "g t" 'centaur-tabs-forward
+             "g T" 'centaur-tabs-backward)
+    )
 #+end_src
 * local variables
 ;; Local Variables: 

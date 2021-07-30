@@ -2,4 +2,13 @@
 #+SUBTITLE: Dotfiles Managed by Chezmoi
 
 This repository contains my dotfiles managed by [[https://www.chezmoi.io/][Chezmoi]].
-It contains init scripts to generate emacs configuration from org, and install [[https://github.com/hlissner/doom-emacs][Doom Emacs]] with [[https://github.com/plexus/chemacs2][Chemacs2]] to switch between.
+
+* Highlights
+** [[file:dot_config/nix/configuration.nix][Configuration.nix]]
+Contains my [[https://nixos.org][NixOS]] configuration.
+** [[file:dot_spectrwm.conf][Spectrwm.conf]]
+Contains my configuration for [[https://github.com/conformal/spectrwm][Spectrwm]], my preferred window manager
+** [[file:dot_emacs.d/emacs.org][Emacs.org]]
+Contains my emacs literate configuration. Chezmoi contains a [[file:run_once_emacsBootstrap.sh][script]] to bootstrap this such that it is not necessary to open emacs to tangle this file.
+** [[file:dot_config/qutebrowser/config.py][Qutebrowser Config]]
+Contains my configuration for [[https://qutebrowser.org][Qutebrowser]], my preferred web browser

@@ -17,8 +17,8 @@
     (load bootstrap-file nil 'nomessage))
 
   (straight-use-package 'use-package)
+  ;; (setq use-package-verbose t)
 #+end_src
-
 * Emacs
 This section is for miscelaneous settings which do not belong elsewhere, everything should be commented.
 #+begin_src emacs-lisp
@@ -73,6 +73,7 @@ Keybindings should go with their respective packages.
 
 
   (use-package dired-x
+    :after general
     :init
     (leader-key-def
       "<SPC>" 'dired-jump
@@ -89,6 +90,7 @@ Configuration for the minibuffer. Currently using [[https://github.com/minad/ver
   ;; Enable vertico
   (use-package vertico
     :straight t
+    :commands execute-extended-command
     :init
     (vertico-mode)
 
@@ -104,6 +106,7 @@ Configuration for the minibuffer. Currently using [[https://github.com/minad/ver
   ;; You may prefer to use `initials' instead of `partial-completion'.
   (use-package orderless
     :straight t
+    :after vertico
     :init
     (setq completion-styles '(orderless)
           completion-category-defaults nil
@@ -111,11 +114,13 @@ Configuration for the minibuffer. Currently using [[https://github.com/minad/ver
 
   ;; Persist history over Emacs restarts. Vertico sorts by history position.
   (use-package savehist
+    :after vertico
     :init
     (savehist-mode))
 
   ;; A few more useful configurations...
   (use-package emacs
+    :after vertico
     :init
     ;; Add prompt indicator to `completing-read-multiple'.
     ;; Alternatively try `consult-completing-read-multiple'.
@@ -138,6 +143,7 @@ Configuration for the minibuffer. Currently using [[https://github.com/minad/ver
 
   (use-package consult
     :straight t
+    :after vertico
     :general
     (leader-key-def
       "/" 'consult-line
@@ -158,19 +164,23 @@ Configuration for the minibuffer. Currently using [[https://github.com/minad/ver
 * Eshell
 Configuration and setup for eshell
 #+begin_src emacs-lisp
-  (leader-key-def
-    "t" 'eshell-other-window)
-
-  (defun eshell-other-window ()
-    "Open a `eshell' in a new window."
-    (interactive)
-    (let ((buf (eshell)))
-      (switch-to-buffer (other-buffer buf))
-      (switch-to-buffer-other-window buf)))
+  (use-package eshell
+    :init
+    (defun eshell-other-window ()
+      "Open a `eshell' in a new window."
+      (interactive)
+      (let ((buf (eshell)))
+        (switch-to-buffer (other-buffer buf))
+        (switch-to-buffer-other-window buf)))
+    :general
+    (leader-key-def
+      "t" 'eshell-other-window)
+    )
 #+end_src
 * Org Mode
 #+begin_src emacs-lisp
   (use-package org
+    :defer t
     :init
     (setq org-confirm-babel-evaluate nil)
     (setq org-src-window-setup 'current-window)
@@ -250,6 +260,7 @@ setup evil and related packages
 * Help
 #+begin_src emacs-lisp
   (use-package which-key
+    :defer t
     :straight t
     :init (which-key-mode)
     :config
@@ -280,14 +291,30 @@ Setup for [[https://github.com/skeeto/elfeed][Elfeed]], an RSS reader
     :straight t
     :general
     ("C-x w" 'elfeed)
-    :config
-    (use-package elfeed-org
-      :straight t
-      :config
-      (elfeed-org))
+    :custom 
+    (elfeed-feeds
+     '(
+       ;; Blogs
+       ("http://daviddfriedman.blogspot.com/atom.xml" blog)
+       ("http://www.econlib.org/feed/indexCaplan_xml" blog)
+       ("https://nullprogram.com/feed/" blog)
+       ("https://feeds.feedburner.com/mrmoneymustache" blog)
+       ("https://astralcodexten.substack.com/feed" blog)
+       ("https://www.singlelunch.com/feed" blog)
+       ("https://www.overcomingbias.com/feed" blog)
+       ("https://planet.emacslife.com/atom.xml" blog)
 
+       ;; Fora
+       ("https://www.lesswrong.com/feed.xml?view=curated-rss" forum)
+
+       ;; Comics
+       ("https://xkcd.com/rss.xml" comic)
+       ("https://www.monkeyuser.com/feed.xml" comic)
+       ))
+    :config
     (use-package elfeed-goodies
       :straight t
+      :after elfeed
       :config
       (elfeed-goodies/setup)
       )
@@ -338,6 +365,7 @@ non-evil-specific navigation
     :hook (prog-mode . smartscan-mode))
 
   (use-package rg
+    :defer t
     :straight t
     :config
     (rg-enable-default-bindings))
@@ -362,6 +390,7 @@ Automatic formatting
 Setup git integration
 #+begin_src emacs-lisp
   (use-package magit
+    :commands magit-status
     :straight t
     )
 #+end_src
@@ -382,29 +411,36 @@ Setup git integration
 * Major Modes
 Set up major modes for languages, etc
 #+begin_src emacs-lisp
-  (use-package toml-mode :straight t)
+  (use-package toml-mode :straight t
+    :mode "\\.toml\\'")
   (use-package yaml-mode
     :straight t
-    :mode "\\.yml\\'")
-  (use-package rustic :straight t)
-  (use-package nix-mode :straight t)
-  (use-package json-mode :straight t)
-
+    :mode "\\.yml\\'"
+    )
+  (use-package rustic :straight t
+    :mode "\\.rs\\'")
+  (use-package nix-mode :straight t
+    :mode "\\.nix\\'")
+  (use-package json-mode :straight t
+    :mode "\\.json\\'")
 
   (use-package kbd-mode
-    :straight (kbd-mode :type git :host github :repo "kmonad/kbd-mode"))
+    :straight (kbd-mode :type git :host github :repo "kmonad/kbd-mode")
+    :mode "\\.kbd\\'")
 #+end_src
 * Checkers
 Set up checkers, i.e. syntax checking, spell checkers, etc
 #+begin_src emacs-lisp
   (use-package flycheck
     :straight t
+    :defer t
     :init (global-flycheck-mode)
     )
 #+end_src
 * Completion
 #+begin_src emacs-lisp
   (use-package company
+    :defer t
     :straight t
     :init
     (setq company-minimum-prefix-length 1
@@ -429,9 +465,11 @@ Set up checkers, i.e. syntax checking, spell checkers, etc
 
   (use-package lsp-ui
     :straight t
+    :hook (lsp-mode . lsp-ui-mode)
     :commands lsp-ui-mode)
   (use-package lsp-treemacs
     :straight t
+    :after lsp-mode
     :commands lsp-treemacs-errors-list)
 #+end_src
 

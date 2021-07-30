@@ -20,11 +20,14 @@
   ;; (setq use-package-verbose t)
 #+end_src
 * Emacs
-This section is for miscelaneous settings which do not belong elsewhere, everything should be commented.
+This section is for miscellaneous settings which do not belong elsewhere, everything should be commented.
 #+begin_src emacs-lisp
   ;; set specific location for custom settings
   (setq custom-file "~/.emacs.d/custom.el")
   (load custom-file)
+
+  ;; clean scratch buffer
+  (setq initial-scratch-message nil)
 #+end_src
 
 * Backup

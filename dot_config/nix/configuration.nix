@@ -74,6 +74,7 @@ in {
     ## Browser
     firefox
     qutebrowser
+    nyxt
     ungoogled-chromium
 
     # Media

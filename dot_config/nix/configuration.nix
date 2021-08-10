@@ -13,7 +13,7 @@ in {
     efi.canTouchEfiVariables = true;
   };
 
-  # networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "nixos"; # Define your hostname.
 
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
@@ -49,18 +49,20 @@ in {
   programs = {
     slock.enable = true;
     light.enable = true;
+    zsh.enable = true;
     ssh.startAgent = true;
-    zsh = { enable = true; };
   };
 
-  users.mutableUsers = false;
-  users.groups = { uinput = { }; };
-  users.users.ethan = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" "input" "uinput" "video" ];
-    hashedPassword =
-      "$6$3IQipgfNp$Ydld7uQiSIWlsqhMTgCNcMDehnQTSzuARPyYrjiAIMRhUXG.rJtu/eeV6biro6pNmjUYiD5c9/wWA.zz4DVoa/";
-    shell = pkgs.zsh;
+  users = {
+    mutableUsers = false;
+    groups = { uinput = { }; };
+    users.ethan = {
+      isNormalUser = true;
+      extraGroups = [ "wheel" "input" "uinput" "video" ];
+      hashedPassword =
+        "$6$3IQipgfNp$Ydld7uQiSIWlsqhMTgCNcMDehnQTSzuARPyYrjiAIMRhUXG.rJtu/eeV6biro6pNmjUYiD5c9/wWA.zz4DVoa/";
+      shell = pkgs.zsh;
+    };
   };
 
   # List packages installed in system profile. To search, run:
@@ -72,14 +74,13 @@ in {
     oneshot
 
     ## Browser
-    firefox
     qutebrowser
+    firefox
     nyxt
-    ungoogled-chromium
+    chromium
 
     # Media
     freetube
-    minitube
     youtube-dl
     mpv
     feh
@@ -88,10 +89,7 @@ in {
     # Terminal
     alacritty
     tmux
-    vim
     neovim
-    taskwarrior
-    taskwarrior-tui
 
     ## Shell
     tealdeer
@@ -112,6 +110,8 @@ in {
     # Backup
     chezmoi
     restic
+    dropbox
+    dropbox-cli
 
     # Photography
     darktable
@@ -148,10 +148,10 @@ in {
     hunspell
     hunspellDicts.en_US
     gnuplot
+    texlive.combined.scheme-full
 
     # Games
     endless-sky
-    cataclysm-dda
 
     # School
     discord
@@ -207,16 +207,6 @@ in {
       # KMonad user access to /dev/uinput
       KERNEL=="uinput", MODE="0660", GROUP="uinput", OPTIONS+="static_node=uinput"
     '';
-
-    picom = {
-      enable = true;
-      settings = {
-        fading = true;
-        fade-in-step = 5.0e-2;
-        fade-out-step = 5.0e-2;
-        inactive-dim = 0.1;
-      };
-    };
   };
 
   # This value determines the NixOS release from which the default

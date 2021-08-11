@@ -26,6 +26,7 @@ Set seperate custom file so that custom settings don't get overwritten by org-ba
   (setq custom-file "~/.emacs.d/custom.el")
   (load custom-file)
 #+end_src
+
 * Emacs
 This section is for miscellaneous settings which do not belong elsewhere, everything should be commented explaining why it was added.
 #+begin_src emacs-lisp
@@ -45,6 +46,7 @@ This section is for miscellaneous settings which do not belong elsewhere, everyt
 	kept-old-versions 2
 	version-control t)
 #+end_src
+
 * General
 This section sets up [[https://github.com/noctuid/general.el][general.el]]. This section should not be used to set keybindings (except for the most general ones).
 Keybindings should go with their respective packages.
@@ -74,10 +76,10 @@ Keybindings should go with their respective packages.
 
     (use-package dired-x
       :after general
-      :init
+      :general
       (leader-key-def
         "<SPC>" 'dired-jump
-        "m" '(lambda () (interactive) (find-file "~/.local/share/chezmoi/dot_emacs.d/emacs.org"))
+        "c" '(lambda () (interactive) (find-file "~/.local/share/chezmoi/dot_emacs.d/emacs.org"))
         ))
     :custom
     (dired-listing-switches "-ABDgho --group-directories-first")
@@ -132,6 +134,7 @@ Keybindings should go with their respective packages.
     (marginalia-mode)
     )
 #+end_src
+
 * Embark
 #+begin_src emacs-lisp
   (use-package embark
@@ -390,6 +393,20 @@ Setup for [[https://github.com/skeeto/elfeed][Elfeed]], an RSS reader
     )
 #+end_src
 
+* Music
+#+begin_src emacs-lisp
+  (use-package emms
+    :straight t
+    :custom
+    (emms-source-file-default-directory "~/media/music/")
+    :init
+    (emms-all)
+    (emms-default-players)
+    :general
+    (leader-key-def
+      "m" 'emms
+      ))
+#+end_src
 * Internet
 Set default browser to qutebrowser.
 Currently doesn't work and isn't tangled.
@@ -574,8 +591,8 @@ Set gui settings, theme, fonts, etc
   ;; theme
   (use-package doom-themes
     :straight t
-    :init (load-theme 'doom-one t)
-    :config
+    :init
+    (load-theme 'doom-one t)
     (defun doom-one-themes-toggle ()
       "Toggle between `doom-one' and `doom-one-light' themes."
       (interactive)
@@ -623,6 +640,7 @@ Set gui settings, theme, fonts, etc
     (doom-modeline-icon t) ;; fix icons in server
     :init
     (doom-modeline-mode 1))
+  
 #+end_src
 * local variables
 ;; Local Variables: 

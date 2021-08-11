@@ -138,8 +138,6 @@ in {
     font-manager
 
     # Audio
-    ncmpcpp
-    mpc_cli
     pamixer
 
     # Productivity

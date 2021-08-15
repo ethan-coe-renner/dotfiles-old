@@ -8,7 +8,7 @@ in {
   boot.loader = {
     systemd-boot = {
       enable = true;
-      configurationLimit = 10;
+      # configurationLimit = 10;
     };
     efi.canTouchEfiVariables = true;
   };
@@ -119,6 +119,10 @@ in {
     digikam
     rawtherapee
 
+    # Image manipulation
+    gimp
+    inkscape
+
     # GUI
     ## Utilities
     bemenu
@@ -180,8 +184,9 @@ in {
   services = {
     xserver = {
       enable = true;
-      displayManager.startx.enable = true;
-      windowManager.spectrwm.enable = true;
+      # displayManager.startx.enable = true;
+      # windowManager.spectrwm.enable = true;
+      desktopManager.plasma5.enable = true;
 
       libinput = {
         enable = true;

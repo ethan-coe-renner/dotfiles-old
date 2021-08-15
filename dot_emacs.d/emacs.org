@@ -209,6 +209,9 @@ Configuration and setup for eshell
       :after org
       )
   
+    (use-package org-download
+      :straight t)
+  
     :custom
     (org-confirm-babel-evaluate nil)
     (org-src-window-setup 'current-window)
@@ -357,7 +360,8 @@ Setup for [[https://github.com/skeeto/elfeed][Elfeed]], an RSS reader
   (use-package elfeed
     :straight t
     :general
-    ("C-x w" 'elfeed)
+    (leader-key-def
+      "r" 'elfeed)
     :custom 
     (elfeed-feeds
      '(
@@ -413,7 +417,7 @@ Currently doesn't work and isn't tangled.
 #+begin_src emacs-lisp :tangle no
   (defun browse-url-qutebrowser (url)
     "Open URL in qutebrowser."
-    ;; (interactive (browse-url-interactive-arg "URL: ")) ;; doesn't seem to work interacctively
+    (interactive (browse-url-interactive-arg "URL: "))
     (setq url (browse-url-encode-url url))
     (start-process (concat "qutebrowser " url) nil
                    "qutebrowser"
@@ -498,6 +502,9 @@ Setup git integration
   (use-package magit
     :commands magit-status
     :straight t
+    :general
+    (leader-key-def
+      "g" 'magit-status)
     )
 #+end_src
 
@@ -576,7 +583,6 @@ Set up checkers, i.e. syntax checking, spell checkers, etc
     :after lsp-mode
     :commands lsp-treemacs-errors-list)
 #+end_src
-
 * GUI
 Set gui settings, theme, fonts, etc
 #+begin_src emacs-lisp

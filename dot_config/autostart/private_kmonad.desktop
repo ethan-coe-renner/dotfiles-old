@@ -1,7 +1,7 @@
 [Desktop Entry]
 Categories=Keyboard
 Comment=keyboard setup
-Exec=kmonad ~/.config/kmonad/t480.kbd
+Exec=kmonad /home/ethan/.config/kmonad/t480.kbd &
 GenericName=keyboard setup
 Name=Kmonad
 StartupNotify=false

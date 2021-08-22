@@ -36,7 +36,7 @@ alias yta="youtube-dl -f bestaudio "
 alias cp="cp -i"
 alias mv='mv -i'
 alias :q='exit'
-alias rm='rip --graveyard ~/.local/share/Trash'
+# alias rm='rip --graveyard ~/.local/share/Trash'
 
 #=program shortcuts
 alias cd='z'

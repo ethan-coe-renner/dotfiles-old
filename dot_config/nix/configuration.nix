@@ -67,7 +67,7 @@ in {
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config = { allowUnfree = true; };
   environment.systemPackages = with pkgs; [
     # Internet
     qbittorrent
@@ -83,6 +83,7 @@ in {
     freetube
     youtube-dl
     mpv
+    vlc
     feh
     sxiv
 
@@ -196,7 +197,7 @@ in {
       layout = "us";
       xkbOptions = "compose:ralt";
     };
-
+    flatpak.enable = true;
     blueman.enable = true;
     emacs = {
       enable = true;

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Categories=Keyboard
+Comment=keyboard setup
+Exec=kmonad ~/.config/kmonad/t480.kbd
+GenericName=keyboard setup
+Name=Kmonad
+StartupNotify=false
+Terminal=false
+Type=Application

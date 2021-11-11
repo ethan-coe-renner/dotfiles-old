@@ -8,12 +8,12 @@ in {
   boot.loader = {
     systemd-boot = {
       enable = true;
-      # configurationLimit = 10;
+      configurationLimit = 10;
     };
     efi.canTouchEfiVariables = true;
   };
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "rocinante"; # Define your hostname.
 
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
@@ -47,18 +47,23 @@ in {
   };
 
   programs = {
+    nm-applet.enable = true;
     slock.enable = true;
     light.enable = true;
     zsh.enable = true;
     ssh.startAgent = true;
+    wireshark.enable = true;
   };
+
+  virtualisation.virtualbox.host.enable = true;
 
   users = {
     mutableUsers = false;
     groups = { uinput = { }; };
+    extraGroups.vboxusers.members = [ "ethan" ];
     users.ethan = {
       isNormalUser = true;
-      extraGroups = [ "wheel" "input" "uinput" "video" ];
+      extraGroups = [ "wheel" "input" "uinput" "video" "wireshark" ];
       hashedPassword =
         "$6$3IQipgfNp$Ydld7uQiSIWlsqhMTgCNcMDehnQTSzuARPyYrjiAIMRhUXG.rJtu/eeV6biro6pNmjUYiD5c9/wWA.zz4DVoa/";
       shell = pkgs.zsh;
@@ -68,126 +73,170 @@ in {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   nixpkgs.config = { allowUnfree = true; };
-  environment.systemPackages = with pkgs; [
-    # Internet
-    qbittorrent
-    oneshot
+  environment.systemPackages = with pkgs;
+    let
+      my-python-packages = python-packages: with python-packages; [
+        pygame
+        matplotlib
+        # other python packages you want
+      ]; 
+      python-with-my-packages = python3.withPackages my-python-packages;
 
-    ## Browser
-    qutebrowser
-    firefox
-    nyxt
-    chromium
+    in
+      [
+        python-with-my-packages
+        # Internet
+        qbittorrent
+        oneshot
+        netcat-gnu
+        wireshark
+        bind
+        
+        ## Browser
+        qutebrowser
+        firefox
+        nyxt
+        chromium
 
-    # Media
-    freetube
-    youtube-dl
-    mpv
-    vlc
-    feh
-    sxiv
+        # Media
+        freetube
+        youtube-dl
+        mpv
+        vlc
+        feh
+        sxiv
+        simplescreenrecorder
 
-    # Terminal
-    alacritty
-    tmux
-    neovim
+        # Terminal
+        alacritty
+        tmux
+        neovim
 
-    ## Shell
-    tealdeer
-    zoxide
-    starship
-    exa
-    tree
-    dust
-    fd
-    skim
-    bat
-    age
-    rage
-    rclone
-    pandoc
-    bottom
+        ## Shell
+        tealdeer
+        zoxide
+        starship
+        exa
+        tree
+        dust
+        unzip
+        file
+        fd
+        skim
+        bat
+        age
+        rage
+        rclone
+        pandoc
+        wkhtmltopdf
+        python39Packages.pdftotext
+        python39Packages.bootstrapped-pip
+        bottom
+        zip
 
-    # Backup
-    chezmoi
-    restic
-    dropbox
-    dropbox-cli
+        # Backup
+        chezmoi
+        restic
+        dropbox
+        dropbox-cli
 
-    # Photography
-    darktable
-    hugin
-    digikam
-    rawtherapee
+        # Photography
+        darktable
+        hugin
+        digikam
+        rawtherapee
 
-    # Image manipulation
-    gimp
-    inkscape
+        # Image manipulation
+        gimp
+        inkscape
 
-    # GUI
-    ## Utilities
-    bemenu
-    gparted
-    pcmanfm
-    keepassxc
-    xclip
-    xorg.xbacklight
-    grobi
-    kmonad
-    virtualbox
+        # GUI
+        ## Utilities
+        bemenu
+        flameshot
+        arandr
+        gparted
+        pcmanfm
+        gtk3
+        keepassxc
+        xclip
+        xorg.xbacklight
+        grobi
+        kmonad
 
-    ## Appearance
-    lxappearance
-    papirus-icon-theme
-    dracula-theme
-    font-manager
+        ## Appearance
+        lxappearance
+        papirus-icon-theme
+        gruvbox-dark-gtk
+        gruvbox-dark-icons-gtk
 
-    # Audio
-    pamixer
+        # Audio
+        pamixer
+        elisa
+        kid3
 
-    # Productivity
-    libreoffice
-    zathura
-    hunspell
-    hunspellDicts.en_US
-    gnuplot
-    texlive.combined.scheme-full
+        # Productivity
+        libreoffice
+        xournalpp
+        zathura
+        libsForQt5.kde-gtk-config # inhibits zathura error "colorreload module"
+        hunspell
+        hunspellDicts.en_US
+        gnuplot
+        texlive.combined.scheme-full
+        bitwarden
 
-    # Games
-    endless-sky
+        # Games
+        endless-sky
+        desmume
+        superTuxKart
+        
+        # Programming
+        python3
+        jdk
+        gcc
+        valgrind
+        rustup
+        nixfmt
+        nodePackages.prettier
+        git
+        gnumake
+        cmake
+        go-task
+        clang
+        ccls
+        coreutils
+        libtool
+        grex
+        ripgrep
+        ripgrep-all
+        pkg-config
+        glib
+        glibc
 
-    # School
-    discord
+        # Temporary
+        hello
 
-    # Programming
-    python3
-    gcc
-    rustup
-    nixfmt
-    nodePackages.prettier
-    git
-    gnumake
-    cmake
-    go-task
-    clang
-    coreutils
-    libtool
-    grex
-    ripgrep
-    ripgrep-all
-
-    # Temporary
-    hello
-  ];
+        # fun
+        cowsay
+        lolcat
+        sl
+        fortune
+        xcowsay
+        toilet
+        oneko
+        espeak
+        aalib
+        asciiquarium
+      ];
   fonts.fonts = with pkgs; [ noto-fonts source-code-pro ];
   powerManagement.powertop.enable = true;
 
   services = {
     xserver = {
       enable = true;
-      # displayManager.startx.enable = true;
-      # windowManager.spectrwm.enable = true;
-      desktopManager.plasma5.enable = true;
+      displayManager.startx.enable = true;
+      windowManager.spectrwm.enable = true;
 
       libinput = {
         enable = true;
@@ -212,6 +261,7 @@ in {
       KERNEL=="uinput", MODE="0660", GROUP="uinput", OPTIONS+="static_node=uinput"
     '';
   };
+  xdg.portal.enable = true; # needed for flatpak
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

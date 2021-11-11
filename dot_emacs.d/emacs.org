@@ -72,8 +72,8 @@ Keybindings should go with their respective packages.
     (use-package all-the-icons-dired
       :straight t
       :hook (dired-mode . all-the-icons-dired-mode))
-
-
+  
+  
     (use-package dired-x
       :after general
       :general
@@ -85,11 +85,10 @@ Keybindings should go with their respective packages.
     (dired-listing-switches "-ABDgho --group-directories-first")
     (global-auto-revert-non-file-buffers t)
     :general
-    (general-def
-      :states 'normal
-      :keymaps 'dired-mode-map
-      "h" 'dired-up-directory
-      "l" 'dired-find-file)
+    (
+     :keymaps 'dired-mode-map
+     "h" 'dired-up-directory
+     "l" 'dired-find-file)
     )
 #+end_src
 
@@ -193,7 +192,7 @@ Configuration and setup for eshell
     :init
     (use-package evil-org
       :straight t
-      :after org
+      :after (org evil)
       :hook (org-mode . (lambda () evil-org-mode))
       :config
       (require 'evil-org-agenda)
@@ -216,6 +215,8 @@ Configuration and setup for eshell
     (org-confirm-babel-evaluate nil)
     (org-src-window-setup 'current-window)
     (org-M-RET-may-split-line nil)
+    (org-image-actual-width 400)
+    (org-export-with-author "Ethan Coe-Renner")
   
     (org-directory "~/Dropbox/org")
     (org-default-notes-file (concat org-directory "/notes.org"))
@@ -245,6 +246,13 @@ Configuration and setup for eshell
     (org-capture-mode . evil-insert-state)
     )
 #+end_src
+* Literate Calc
+#+begin_src emacs-lisp
+  (use-package literate-calc-mode
+    :straight t
+    )
+#+end_src
+
 * Yequake
 Create temporary emacs frames for simple tasks, i.e. org capture.
 Currently will not work unless an emacs frame is already open as per [[https://github.com/alphapapa/yequake/issues/2][this issue]], which sort of makes this useless for my purposes (which are quickly adding tasks from outside of emacs).
@@ -271,12 +279,15 @@ setup evil and related packages
     :straight t
     :init
     (global-visual-line-mode 1)
+  
     (use-package undo-fu :straight t)
     (use-package evil-collection
       :straight t
+      :init
       :after evil
       :config
       (evil-collection-init))
+  
     (use-package evil-goggles
       :straight t
       :config
@@ -314,16 +325,19 @@ setup evil and related packages
   
     :custom
     (evil-undo-system 'undo-fu)
-    (evil-want-keybinding nil) ;; needed for evil-collection
     (evil-want-C-u-scroll t)
     (evil-respect-visual-line-mode t)
+    (evil-want-keybinding nil)
   
     :config
     (evil-mode 1)
     (general-def
       "C-M-u" 'universal-argument ;; doesn't work with :general for some reason
       )
-  
+    (general-def
+      :states 'motion
+      "j" 'evil-next-visual-line
+      "k" 'evil-previous-visual-line)
     )
 #+end_src
 
@@ -386,14 +400,6 @@ Setup for [[https://github.com/skeeto/elfeed][Elfeed]], an RSS reader
     :hook
     (elfeed-search-mode . elfeed-update) ;; auto update when opened
     :config
-    (use-package elfeed-goodies
-      :straight t
-      :after elfeed
-      :custom
-      (byte-compile-warnings '(cl-functions)) ;; supress warning about cl.el deprecation
-      :config
-      (elfeed-goodies/setup)
-      )
     )
 #+end_src
 
@@ -535,7 +541,10 @@ Set up major modes for languages, etc
     :mode "\\.nix\\'")
   (use-package json-mode :straight t
     :mode "\\.json\\'")
-
+  
+  (use-package mips-mode :straight t
+    :mode "\\.asm\\'")
+  
   (use-package kbd-mode
     :straight (kbd-mode :type git :host github :repo "kmonad/kbd-mode")
     :mode "\\.kbd\\'")
@@ -554,8 +563,7 @@ Set up checkers, i.e. syntax checking, spell checkers, etc
   (use-package company
     :straight t
     :custom
-    (company-minimum-prefix-length 1)
-    (company-idle-delay 0.0) ;; default is 0.2
+    (company-minimum-prefix-length 3)
     :hook
     (after-init . global-company-mode)
     )
@@ -571,9 +579,10 @@ Set up checkers, i.e. syntax checking, spell checkers, etc
     (lsp-keymap-prefix "C-c l")
     :hook (
            (rustic-mode . lsp)
+           (c-mode . lsp)
            (lsp-mode . lsp-enable-which-key-integration))
     :commands lsp)
-
+  
   (use-package lsp-ui
     :straight t
     :hook (lsp-mode . lsp-ui-mode)
@@ -598,13 +607,13 @@ Set gui settings, theme, fonts, etc
   (use-package doom-themes
     :straight t
     :init
-    (load-theme 'doom-one t)
+    (load-theme 'doom-gruvbox t)
     (defun doom-one-themes-toggle ()
       "Toggle between `doom-one' and `doom-one-light' themes."
       (interactive)
       (pcase (car custom-enabled-themes)
-        ('doom-one (load-theme 'doom-one-light))
-        ('doom-one-light (load-theme 'doom-one))
+        ('doom-gruvbox (load-theme 'doom-gruvbox-light))
+        ('doom-gruvbox-light (load-theme 'doom-gruvbox))
         ))
     :general
     ("<f5>" 'doom-one-themes-toggle)
@@ -620,8 +629,7 @@ Set gui settings, theme, fonts, etc
     (dashboard-set-file-icons t)
     (dashboard-set-init-info t)
     (dashboard-center-content t)
-    (dashboard-items '((agenda . 5)
-                       (bookmarks . 5)
+    (dashboard-items '((bookmarks . 5)
                        (projects . 5)))
   
     :config
@@ -633,6 +641,7 @@ Set gui settings, theme, fonts, etc
   (set-face-attribute 'fixed-pitch nil :font "Source Code Pro" :height 120)
   
   ;; line numbers
+  (setq display-line-numbers 'relative)
   (dolist (mode '(text-mode-hook
                   prog-mode-hook
                   conf-mode-hook

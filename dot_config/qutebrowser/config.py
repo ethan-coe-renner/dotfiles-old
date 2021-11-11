@@ -53,6 +53,10 @@ config.set("content.javascript.enabled", True,
 config.set("content.javascript.enabled", False)
 
 config.set("content.notifications.enabled", False)
+
+config.set("colors.webpage.darkmode.enabled", True)
+
+
 # ----------------------------------------------------------------------------------
 
 # privacy settings
@@ -122,4 +126,4 @@ c.fonts.default_size = "10pt"
 
 # theme-------------
 # config.source("gruvbox.py")
-config.source("dracula.py")
+config.source("gruvbox.py")

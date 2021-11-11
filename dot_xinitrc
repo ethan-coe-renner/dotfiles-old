@@ -1,7 +1,6 @@
 kmonad /home/ethan/.config/kmonad/t480.kbd &
-kmonad /home/ethan/.config/kmonad/external.kbd &
 
-feh --bg-scale /home/ethan/media/pictures/wallpapers/mcrn2.jpg
+feh --bg-scale /home/ethan/media/pictures/wallpapers/linux/gnu.png
 
 dropbox &
 

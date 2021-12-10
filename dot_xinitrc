@@ -1,6 +1,6 @@
 kmonad /home/ethan/.config/kmonad/t480.kbd &
 
-feh --bg-scale /home/ethan/media/pictures/wallpapers/linux/gnu.png
+feh --bg-scale /home/ethan/media/pictures/wallpapers/mandelbrot.jpg
 
 dropbox &
 

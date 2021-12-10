@@ -91,6 +91,9 @@ in {
         netcat-gnu
         wireshark
         bind
+
+        ## cryptominisat
+        zlib
         
         ## Browser
         qutebrowser
@@ -149,6 +152,7 @@ in {
         # Image manipulation
         gimp
         inkscape
+        imagemagick
 
         # GUI
         ## Utilities
@@ -163,6 +167,7 @@ in {
         xorg.xbacklight
         grobi
         kmonad
+        pciutils
 
         ## Appearance
         lxappearance
@@ -179,6 +184,7 @@ in {
         libreoffice
         xournalpp
         zathura
+        qt4
         libsForQt5.kde-gtk-config # inhibits zathura error "colorreload module"
         hunspell
         hunspellDicts.en_US

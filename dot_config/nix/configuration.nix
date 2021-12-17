@@ -179,6 +179,7 @@ in {
         pamixer
         elisa
         kid3
+        spotify
 
         # Productivity
         libreoffice
@@ -196,6 +197,7 @@ in {
         endless-sky
         desmume
         superTuxKart
+        xonotic
         
         # Programming
         python3
@@ -242,7 +244,8 @@ in {
     xserver = {
       enable = true;
       displayManager.startx.enable = true;
-      windowManager.spectrwm.enable = true;
+      # windowManager.spectrwm.enable = true;
+      windowManager.leftwm.enable = true;
 
       libinput = {
         enable = true;

@@ -52,7 +52,6 @@ in {
     light.enable = true;
     zsh.enable = true;
     ssh.startAgent = true;
-    wireshark.enable = true;
   };
 
   virtualisation.virtualbox.host.enable = true;
@@ -63,7 +62,7 @@ in {
     extraGroups.vboxusers.members = [ "ethan" ];
     users.ethan = {
       isNormalUser = true;
-      extraGroups = [ "wheel" "input" "uinput" "video" "wireshark" ];
+      extraGroups = [ "wheel" "input" "uinput" "video" ];
       hashedPassword =
         "$6$3IQipgfNp$Ydld7uQiSIWlsqhMTgCNcMDehnQTSzuARPyYrjiAIMRhUXG.rJtu/eeV6biro6pNmjUYiD5c9/wWA.zz4DVoa/";
       shell = pkgs.zsh;
@@ -78,7 +77,6 @@ in {
       my-python-packages = python-packages: with python-packages; [
         pygame
         matplotlib
-        # other python packages you want
       ]; 
       python-with-my-packages = python3.withPackages my-python-packages;
 
@@ -90,11 +88,9 @@ in {
         oneshot
         netcat-gnu
         wireshark
+        tor-browser-bundle-bin
         bind
 
-        ## cryptominisat
-        zlib
-        
         ## Browser
         qutebrowser
         firefox
@@ -103,7 +99,7 @@ in {
 
         # Media
         freetube
-        youtube-dl
+        yt-dlp
         mpv
         vlc
         feh
@@ -157,6 +153,7 @@ in {
         # GUI
         ## Utilities
         bemenu
+        rofi
         flameshot
         arandr
         gparted
@@ -182,6 +179,7 @@ in {
         spotify
 
         # Productivity
+        calibre
         libreoffice
         xournalpp
         zathura
@@ -221,6 +219,8 @@ in {
         pkg-config
         glib
         glibc
+        nodePackages.npm
+        nodejs
 
         # Temporary
         hello
@@ -243,8 +243,13 @@ in {
   services = {
     xserver = {
       enable = true;
+
+      # layout = "dvorak";
+      # desktopManager.xfce.enable = true;
+
+
       displayManager.startx.enable = true;
-      # windowManager.spectrwm.enable = true;
+      windowManager.spectrwm.enable = true;
       windowManager.leftwm.enable = true;
 
       libinput = {

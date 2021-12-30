@@ -6,4 +6,4 @@ dropbox &
 
 grobi update
 
-exec dbus-launch leftwm
+exec spectrwm

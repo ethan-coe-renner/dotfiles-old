@@ -1,4 +1,4 @@
-PATH=$PATH:~/.local/bin:~/.cargo/bin
+PATH=$PATH:~/.local/bin:~/.cargo/bin:~/.npm-packages/bin
 export EDITOR="emacsclient"
 export TERMINAL="alacritty"
 export BROWSER="qutebrowser"

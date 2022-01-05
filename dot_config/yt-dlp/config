@@ -1,1 +1,11 @@
+# for youtube livestreams, download from start
+--live-from-start
+
+# embed extra info
+--embed-subs
+--embed-metadata
+--embed-chapters
+
+--prefer-free-formats
+
 -o ~/media/ytdlp/%(title)s.%(ext)s

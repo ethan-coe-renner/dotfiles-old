@@ -218,7 +218,6 @@ Configuration and setup for eshell
     (org-image-actual-width 400)
     (org-export-with-author "Ethan Coe-Renner")
   
-    (org-directory "~/Dropbox/org")
     (org-default-notes-file (concat org-directory "/notes.org"))
   
     (org-capture-bookmark nil)

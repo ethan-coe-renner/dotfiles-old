@@ -23,9 +23,10 @@ in {
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
-  networking.useDHCP = false;
-  networking.interfaces.enp0s31f6.useDHCP = true;
-  networking.interfaces.wlp3s0.useDHCP = true;
+  # commented out because it causes wifi to break
+  # networking.useDHCP = false;
+  # networking.interfaces.enp0s31f6.useDHCP = true;
+  # networking.interfaces.wlp3s0.useDHCP = true;
 
   i18n.defaultLocale = "en_US.UTF-8";
   console = { keyMap = "dvorak"; };
@@ -54,12 +55,9 @@ in {
     ssh.startAgent = true;
   };
 
-  virtualisation.virtualbox.host.enable = true;
-
   users = {
     mutableUsers = false;
     groups = { uinput = { }; };
-    extraGroups.vboxusers.members = [ "ethan" ];
     users.ethan = {
       isNormalUser = true;
       extraGroups = [ "wheel" "input" "uinput" "video" ];
@@ -86,8 +84,6 @@ in {
         # Internet
         qbittorrent
         oneshot
-        netcat-gnu
-        wireshark
         tor-browser-bundle-bin
         bind
 
@@ -136,8 +132,6 @@ in {
         # Backup
         chezmoi
         restic
-        dropbox
-        dropbox-cli
 
         # Photography
         darktable
@@ -152,7 +146,9 @@ in {
 
         # GUI
         ## Utilities
-        bemenu
+        libnotify
+        dunst
+        dmenu
         rofi
         flameshot
         arandr
@@ -165,6 +161,7 @@ in {
         grobi
         kmonad
         pciutils
+        picom
 
         ## Appearance
         lxappearance
@@ -218,11 +215,11 @@ in {
         ripgrep-all
         pkg-config
         glib
-        glibc
         nodePackages.npm
         nodejs
 
         # Temporary
+        rpi-imager
         hello
 
         # fun
@@ -246,15 +243,15 @@ in {
 
       # layout = "dvorak";
       # desktopManager.xfce.enable = true;
-
-
       displayManager.startx.enable = true;
       windowManager.spectrwm.enable = true;
-      windowManager.leftwm.enable = true;
 
       libinput = {
         enable = true;
-        touchpad.tapping = false;
+        touchpad = {
+          accelSpeed = "0.3";
+          disableWhileTyping = true;
+        };
         mouse.accelSpeed = "-0.3";
       };
       layout = "us";
@@ -262,11 +259,12 @@ in {
     };
     flatpak.enable = true;
     blueman.enable = true;
+    openssh.enable = true;
     emacs = {
       enable = true;
       defaultEditor = true;
     };
-    chrony.enable = true;
+    timesyncd.enable = true;
     fwupd.enable = true;
     tlp.enable = true;
     throttled.enable = lib.mkDefault true;

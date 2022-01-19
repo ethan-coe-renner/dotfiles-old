@@ -92,11 +92,14 @@ in {
         firefox
         nyxt
         chromium
+        google-chrome
 
         # Media
         freetube
         yt-dlp
         mpv
+        mpc_cli
+        ncmpcpp
         vlc
         feh
         sxiv
@@ -193,6 +196,8 @@ in {
         desmume
         superTuxKart
         xonotic
+        gnugo
+        kigo
         
         # Programming
         python3
@@ -214,13 +219,14 @@ in {
         ripgrep
         ripgrep-all
         pkg-config
-        glib
+        glibc
         nodePackages.npm
         nodejs
 
         # Temporary
         rpi-imager
         hello
+        zoom-us
 
         # fun
         cowsay
@@ -242,9 +248,11 @@ in {
       enable = true;
 
       # layout = "dvorak";
-      # desktopManager.xfce.enable = true;
+      # desktopManager.plasma5.enable = true;
       displayManager.startx.enable = true;
       windowManager.spectrwm.enable = true;
+      windowManager.stumpwm.enable = true;
+      layout = "us";
 
       libinput = {
         enable = true;
@@ -254,7 +262,6 @@ in {
         };
         mouse.accelSpeed = "-0.3";
       };
-      layout = "us";
       xkbOptions = "compose:ralt";
     };
     flatpak.enable = true;

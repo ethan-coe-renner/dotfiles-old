@@ -1,9 +1,11 @@
 kmonad /home/ethan/.config/kmonad/t480.kbd &
 
-feh --bg-scale /home/ethan/media/pictures/wallpapers/expanse/mcrn2.jpg
+feh --bg-scale /home/ethan/media/pictures/wallpapers/linux/brokenWindows.jpeg
 
 dunst &
 
-# grobi update
+picom -b
 
-exec spectrwm
+grobi update
+
+exec stumpwm

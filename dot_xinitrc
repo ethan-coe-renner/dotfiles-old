@@ -9,3 +9,4 @@ picom -b
 grobi update
 
 exec stumpwm
+#exec spectrwm

@@ -10,7 +10,7 @@ export RESTIC_PASSWORD_FILE="/home/ethan/.restic/psswd"
 
 export SUDO_EDITOR="emacsclient"
 
-export BEMENU_OPTS="bemenu-run -b -l 5 --fn 'Source Code Pro' -p ':' --tb '#928374' --tf '#ebdbb2' --fb '#282828' --ff '#ebdbb2' --nb '#282828' --nf '#928374' --hb '#3c3836' --hf '#b8bb26' --sb '#3c3836' --sf '#b8bb26' --scb '#282828' --scf '#b16286'"
+export BEMENU_OPTS="bemenu-run -b -l 5 --fn 'Source Code Pro' -p 'run:' --tb '#282828' --tf '#b8bb26' --fb '#282828' --ff '#282828' --nb '#282828' --nf '#928374' --hb '#3c3836' --hf '#b8bb26' --sb '#3c3836' --sf '#b8bb26' --scb '#282828' --scf '#b16286'"
 
 export BAT_THEME="gruvbox-dark"
 export TERM=xterm-256color

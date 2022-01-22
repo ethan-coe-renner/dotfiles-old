@@ -513,6 +513,11 @@ Setup git integration
     )
 #+end_src
 
+* Discord
+Setup git integration
+#+begin_src emacs-lisp
+  (use-package elcord)
+#+end_src
 * Project Management
 #+begin_src emacs-lisp
   (use-package projectile

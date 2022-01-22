@@ -151,9 +151,12 @@ in {
         ## Utilities
         libnotify
         dunst
+        stalonetray
+        networkmanagerapplet
         dmenu
         rofi
         flameshot
+        scrot
         arandr
         gparted
         pcmanfm
@@ -198,6 +201,7 @@ in {
         xonotic
         gnugo
         kigo
+        discord
         
         # Programming
         python3

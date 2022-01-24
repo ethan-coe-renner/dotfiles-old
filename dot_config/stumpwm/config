@@ -92,6 +92,13 @@
 
 (define-key *root-map* (kbd "c") "chezmoi")
 
+;; chezmoi edit
+(defcommand chezmoi-edit () ()
+  (run-shell-command "chezmoi managed | bemenu | xargs chezmoi edit" t)
+  )
+
+(define-key *root-map* (kbd "C") "chezmoi-edit")
+
 ;; splits
 (define-key *top-map* (kbd "s-v") "vsplit")
 (define-key *top-map* (kbd "s-s") "hsplit")

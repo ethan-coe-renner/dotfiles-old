@@ -97,6 +97,7 @@
 (define-key *top-map* (kbd "s-s") "hsplit")
 
 ;; Message window font
+;; TODO: probably set using x logical font description, with xorg-xfontsel
 (set-font "-xos4-terminus-medium-r-normal--14-140-72-72-c-80-iso8859-15")
 
 ;; Volume

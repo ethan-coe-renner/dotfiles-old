@@ -168,6 +168,8 @@ in {
         kmonad
         pciutils
         picom
+        acpi
+        weather
 
         ## Appearance
         lxappearance
@@ -177,6 +179,7 @@ in {
 
         # Audio
         pamixer
+        pavucontrol
         elisa
         kid3
         spotify

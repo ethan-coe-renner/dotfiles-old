@@ -28,6 +28,7 @@
 (define-key *top-map* (kbd "s-Q") "remove-split")
 
 (define-key *top-map* (kbd "s-r") "iresize")
+(define-key *top-map* (kbd "s-R") "iresize")
 
 (define-key *top-map* (kbd "s-n") "pull-hidden-next")
 (define-key *top-map* (kbd "s-l") "windowlist")
@@ -44,21 +45,30 @@
 (define-key *top-map* (kbd "s-S-Up") "move-window up")
 
 (define-key *top-map* (kbd "s-C-x") "quit-confirm")
-(define-key *top-map* (kbd "s-X") "restart-hard")
+(define-key *top-map* (kbd "s-S-x") "restart-hard")
 
 ;; window selection
-(define-key *top-map* (kbd "s-b") "pull-from-windowlist")
 
-(define-key *top-map* (kbd "s-0") "select-window-by-number 0")
-(define-key *top-map* (kbd "s-1") "select-window-by-number 1")
-(define-key *top-map* (kbd "s-2") "select-window-by-number 2")
-(define-key *top-map* (kbd "s-3") "select-window-by-number 3")
-(define-key *top-map* (kbd "s-4") "select-window-by-number 4")
-(define-key *top-map* (kbd "s-5") "select-window-by-number 5")
-(define-key *top-map* (kbd "s-6") "select-window-by-number 6")
-(define-key *top-map* (kbd "s-7") "select-window-by-number 7")
-(define-key *top-map* (kbd "s-8") "select-window-by-number 8")
-(define-key *top-map* (kbd "s-9") "select-window-by-number 9")
+(defcommand pull-hidden-or-select (n) ((:window-number "Num: "))
+  "Pulls a window to the current frame if hidden, otherwise switches to the frame displaying it"
+  (let ((win (find n (group-windows (current-group)) :key 'window-number :test '=)))
+    (if (window-visible-p win)
+	;; 	(message "visible")
+	;; (message "invisible")
+	(select-window-by-number n)
+      (pull-window-by-number n)
+      )))
+
+(define-key *top-map* (kbd "s-0") "pull-hidden-or-select 0")
+(define-key *top-map* (kbd "s-1") "pull-hidden-or-select 1")
+(define-key *top-map* (kbd "s-2") "pull-hidden-or-select 2")
+(define-key *top-map* (kbd "s-3") "pull-hidden-or-select 3")
+(define-key *top-map* (kbd "s-4") "pull-hidden-or-select 4")
+(define-key *top-map* (kbd "s-5") "pull-hidden-or-select 5")
+(define-key *top-map* (kbd "s-6") "pull-hidden-or-select 6")
+(define-key *top-map* (kbd "s-7") "pull-hidden-or-select 7")
+(define-key *top-map* (kbd "s-8") "pull-hidden-or-select 8")
+(define-key *top-map* (kbd "s-9") "pull-hidden-or-select 9")
 
 (define-key *top-map* (kbd "s-)") "pull-window-by-number 0")
 (define-key *top-map* (kbd "s-!") "pull-window-by-number 1")
@@ -70,6 +80,7 @@
 (define-key *top-map* (kbd "s-&") "pull-window-by-number 7")
 (define-key *top-map* (kbd "s-*") "pull-window-by-number 8")
 (define-key *top-map* (kbd "s-(") "pull-window-by-number 9")
+
 
 ;; display battery
 (defcommand battery () ()
@@ -85,12 +96,14 @@
 
 (define-key *root-map* (kbd "W") "weather")
 
+
 ;; apply chezmoi
 (defcommand chezmoi () ()
   (run-shell-command "chezmoi apply" t)
   (message "chezmoi applied"))
 
-(define-key *root-map* (kbd "c") "chezmoi")
+(define-key *root-map* (kbd "W") "chezmoi")
+
 
 ;; splits
 (define-key *top-map* (kbd "s-v") "vsplit")
@@ -126,13 +139,7 @@
 
 ;; Modeline
 (setf *window-format* "%m%n%s%c")
-(setf *screen-mode-line-format* (list
-				 "[^B%n^b] %W^>"
-				 '(:eval (run-shell-command "echo -n 'VOL: ' && pamixer --get-volume | tr '\\n' ' ' && echo -n '| '" t))
-				 '(:eval (run-shell-command "nmcli -t -f NAME c show --active | tr '\\n' ' ' && echo -n '| '" t))
-				 ;; '(:eval (run-shell-command "echo -n $(($(cat /sys/class/power_supply/BAT0/capacity) + $(cat /sys/class/power_supply/BAT1/capacity)))"))
-				 "%d"
-				 ))
+(setf *screen-mode-line-format* "[^B%n^b] %W^> %d")
 (setf *time-modeline-string* "%a %F %k:%M")
 (setf *mode-line-timeout* 2)
 
@@ -142,6 +149,13 @@
 	      (enable-mode-line screen head t))))
 (enable-mode-line-everywhere)
 
+;; Last rule to match takes precedence!
+;; TIP: if the argument to :title or :role begins with an ellipsis, a substring
+;; match is performed.
+;; TIP: if the :create flag is set then a missing group will be created and
+;; restored from *data-dir*/create file.
+;; TIP: if the :restore flag is set then group dump is restored even for an
+;; existing group using *data-dir*/restore file.
 (define-frame-preference "Default"
   ;; frame raise lock (lock AND raise == jumpto)
   (0 t nil :class "Konqueror" :role "...konqueror-mainwindow")

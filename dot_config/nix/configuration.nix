@@ -171,6 +171,11 @@ in {
         acpi
         weather
 
+        ## pentest
+        # hashcat
+        # crunch
+        # intel-ocl # required for hashcat
+
         ## Appearance
         lxappearance
         papirus-icon-theme
@@ -210,6 +215,7 @@ in {
         python3
         jdk
         gcc
+        astyle
         valgrind
         rustup
         nixfmt
@@ -233,7 +239,6 @@ in {
         # Temporary
         rpi-imager
         hello
-        zoom-us
 
         # fun
         cowsay

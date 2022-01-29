@@ -49,6 +49,26 @@
 ;; window selection
 (define-key *top-map* (kbd "s-b") "pull-from-windowlist")
 
+(defcommand pull-invis-select-vis (win) ((:window-name "Window: "))
+  "selects window if visible, otherwise pulls into current frame"
+  (if (window-visible-p win)
+      (select-window win)
+    (pull-window win)
+    )
+  )
+
+(defcommand pull-invis-select-vis-by-number (n)
+  ((:window-number "Window: "))
+  "selects window if visible, otherwise pulls into current frame by number"
+  (let (
+	(win (find n (current-group) :key 'window-number :test '=))
+	)
+    (when win
+      (pull-invis-select-vis win))))
+
+
+(define-key *root-map* (kbd "a") "pull-invis-select-vis-by-number 0")
+
 (define-key *top-map* (kbd "s-0") "select-window-by-number 0")
 (define-key *top-map* (kbd "s-1") "select-window-by-number 1")
 (define-key *top-map* (kbd "s-2") "select-window-by-number 2")
@@ -80,10 +100,20 @@
 
 ;; display weather
 (defcommand weather () ()
+  (message "Getting weather...")
   (message 
    (run-shell-command "weather -q sck" t)))
 
 (define-key *root-map* (kbd "W") "weather")
+
+;;scrot
+
+;; display weather
+(defcommand scrot () ()
+  (run-shell-command "scrot '%Y-%m-%d_$wx$h.png' --focused -e 'mv $f ~/shots/'" t)
+  )
+
+(define-key *root-map* (kbd "s") "scrot")
 
 ;; apply chezmoi
 (defcommand chezmoi () ()
@@ -91,13 +121,6 @@
   (message "chezmoi applied"))
 
 (define-key *root-map* (kbd "c") "chezmoi")
-
-;; chezmoi edit
-(defcommand chezmoi-edit () ()
-  (run-shell-command "chezmoi managed | bemenu | xargs chezmoi edit" t)
-  )
-
-(define-key *root-map* (kbd "C") "chezmoi-edit")
 
 ;; splits
 (define-key *top-map* (kbd "s-v") "vsplit")

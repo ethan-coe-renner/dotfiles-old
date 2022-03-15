@@ -161,6 +161,7 @@ in {
 
         # GUI
         ## Utilities
+        xmobar
         libnotify
         dunst
         stalonetray
@@ -290,7 +291,6 @@ in {
           haskellPackages.xmonad_0_17_0
           haskellPackages.xmonad-contrib_0_17_0
           haskellPackages.xmonad-extras_0_17_0
-          haskellPackages.xmobar
         ];
       };
 

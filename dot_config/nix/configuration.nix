@@ -178,6 +178,7 @@ in {
         xorg.xbacklight
         grobi
         kmonad
+        stack
         pciutils
         picom
         acpi
@@ -281,15 +282,19 @@ in {
       windowManager.spectrwm.enable = true;
       windowManager.stumpwm.enable = true;
 
+      # XMonad
       windowManager.xmonad = {
         enable = true;
         enableContribAndExtras = true;
         extraPackages = haskellPackages: [
+          haskellPackages.xmonad_0_17_0
+          haskellPackages.xmonad-contrib_0_17_0
+          haskellPackages.xmonad-extras_0_17_0
           haskellPackages.xmobar
-          haskellPackages.hoogle
-          haskellPackages.haskell-language-server
         ];
       };
+
+
       
       layout = "us";
 

@@ -109,7 +109,7 @@ in {
         sxiv
         simplescreenrecorder
 
-        haskellPackages.xmobar
+        ormolu
 
         # Terminal
         alacritty
@@ -284,6 +284,11 @@ in {
       windowManager.xmonad = {
         enable = true;
         enableContribAndExtras = true;
+        extraPackages = haskellPackages: [
+          haskellPackages.xmobar
+          haskellPackages.hoogle
+          haskellPackages.haskell-language-server
+        ];
       };
       
       layout = "us";

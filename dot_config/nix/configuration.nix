@@ -37,7 +37,8 @@ in {
   };
   nix.optimise.automatic = true;
 
-  nix.trustedUsers = [ "root" "ethan" ];
+  nix.settings.trusted-users = [ "root" "ethan" ];
+  hardware.bluetooth.enable=true;
 
   # Enable sound.
   sound.enable = true;
@@ -66,6 +67,8 @@ in {
       shell = pkgs.zsh;
     };
   };
+  virtualisation.virtualbox.host.enable = true;
+  users.extraGroups.vboxusers.members = [ "ethan" ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -73,7 +76,7 @@ in {
   environment.systemPackages = with pkgs;
     let
       my-python-packages = python-packages: with python-packages; [
-        pygame
+        # pygame
         matplotlib
       ]; 
       python-with-my-packages = python3.withPackages my-python-packages;
@@ -84,8 +87,9 @@ in {
         # Internet
         qbittorrent
         oneshot
-        tor-browser-bundle-bin
+        # tor-browser-bundle-bin
         bind
+        wget
 
         ## Browser
         qutebrowser
@@ -105,13 +109,21 @@ in {
         sxiv
         simplescreenrecorder
 
+        haskellPackages.xmobar
+
         # Terminal
         alacritty
         tmux
         neovim
 
+
+        vscodium
+        atom
+
         ## Shell
         tealdeer
+        python39Packages.howdoi
+        yapf
         zoxide
         starship
         exa
@@ -170,10 +182,11 @@ in {
         picom
         acpi
         weather
+        eww
 
         ## pentest
         # hashcat
-        # crunch
+        crunch
         # intel-ocl # required for hashcat
 
         ## Appearance
@@ -210,6 +223,7 @@ in {
         gnugo
         kigo
         discord
+        betterdiscordctl
         
         # Programming
         python3
@@ -218,6 +232,7 @@ in {
         astyle
         valgrind
         rustup
+        wasm-pack
         nixfmt
         nodePackages.prettier
         git
@@ -235,6 +250,7 @@ in {
         glibc
         nodePackages.npm
         nodejs
+        ghc
 
         # Temporary
         rpi-imager
@@ -264,6 +280,12 @@ in {
       displayManager.startx.enable = true;
       windowManager.spectrwm.enable = true;
       windowManager.stumpwm.enable = true;
+
+      windowManager.xmonad = {
+        enable = true;
+        enableContribAndExtras = true;
+      };
+      
       layout = "us";
 
       libinput = {
@@ -292,7 +314,12 @@ in {
       KERNEL=="uinput", MODE="0660", GROUP="uinput", OPTIONS+="static_node=uinput"
     '';
   };
-  xdg.portal.enable = true; # needed for flatpak
+
+  xdg.portal = {
+    enable = true; # needed for flatpak
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  };
+
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

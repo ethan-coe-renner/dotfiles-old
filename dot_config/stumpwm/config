@@ -12,7 +12,7 @@
 (define-key *top-map* (kbd "XF86Favorites") "exec bemenu-run")
 
 ;; Programs
-(define-key *top-map* (kbd "s-c") "exec nyxt")
+(define-key *top-map* (kbd "s-c") "exec qutebrowser")
 (define-key *top-map* (kbd "s-x") "exec emacsclient -c")
 
 ;; groups
@@ -21,16 +21,18 @@
 (define-key *top-map* (kbd "s-f") "gmove")
 
 ;; Lock screen
-(define-key *top-map* (kbd "s-DEL") "exec slock")
+(define-key *top-map* (kbd "s-l") "exec slock")
 
 ;; window management
 (define-key *top-map* (kbd "s-q") "delete-window")
 (define-key *top-map* (kbd "s-Q") "remove-split")
 
+(define-key *top-map* (kbd "s-f") "fullscreen")
+
 (define-key *top-map* (kbd "s-r") "iresize")
 
 (define-key *top-map* (kbd "s-n") "pull-hidden-next")
-(define-key *top-map* (kbd "s-l") "windowlist")
+;; (define-key *top-map* (kbd "s-l") "windowlist")
 (define-key *top-map* (kbd "s-w") "fnext")
 
 (define-key *top-map* (kbd "s-Left") "move-focus left")
@@ -98,6 +100,14 @@
 
 (define-key *root-map* (kbd "b") "battery")
 
+
+;; display calendar
+(defcommand calendar () ()
+  (message 
+   (run-shell-command "cal" t)))
+
+(define-key *root-map* (kbd "d") "calendar")
+
 ;; display weather
 (defcommand weather () ()
   (message "Getting weather...")
@@ -106,9 +116,7 @@
 
 (define-key *root-map* (kbd "W") "weather")
 
-;;scrot
-
-;; display weather
+;; screenshot
 (defcommand scrot () ()
   (run-shell-command "scrot '%Y-%m-%d_$wx$h.png' --focused -e 'mv $f ~/shots/'" t)
   )
@@ -129,6 +137,8 @@
 ;; Message window font
 ;; TODO: probably set using x logical font description, with xorg-xfontsel
 (set-font "-xos4-terminus-medium-r-normal--14-140-72-72-c-80-iso8859-15")
+
+(define-key *top-map* (kbd "XF86Display") "exec grobi update")
 
 ;; Volume
 (let ((vup "exec pactl set-sink-volume @DEFAULT_SINK@ +5%")
@@ -166,6 +176,15 @@
 				 ))
 (setf *time-modeline-string* "%a %F %k:%M")
 (setf *mode-line-timeout* 2)
+
+(setf *mode-line-background-color* "#232a36"
+      *mode-line-foreground-color* "#f8f8f2")
+
+
+(set-bg-color "#232a36")
+(set-fg-color "#f8f8f2")
+(set-border-color "#282a36")
+
 
 (defun enable-mode-line-everywhere ()
   (loop for screen in *screen-list* do

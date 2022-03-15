@@ -51,3 +51,4 @@ alias syncbackup='rclone sync .bak raspi:backup/bak'
 alias syncmedia='rclone sync media raspi:media'
 alias lofi='mpv --no-video https://youtu.be/5qap5aO4i9A'
 alias ch='chezmoi'
+

@@ -54,7 +54,7 @@ config.set("content.javascript.enabled", False)
 
 config.set("content.notifications.enabled", False)
 
-config.set("colors.webpage.darkmode.enabled", True)
+# config.set("colors.webpage.darkmode.enabled", True)
 
 
 # ----------------------------------------------------------------------------------
@@ -125,5 +125,4 @@ c.fonts.default_family = "Source Code Pro"
 c.fonts.default_size = "10pt"
 
 # theme-------------
-# config.source("gruvbox.py")
-config.source("gruvbox.py")
+config.source("dracula.py")

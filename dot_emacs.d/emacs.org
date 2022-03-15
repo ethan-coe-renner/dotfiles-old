@@ -538,15 +538,16 @@ Set up major modes for languages, etc
   (use-package rustic :straight t)
   (use-package nix-mode :straight t
     :mode "\\.nix\\'")
+  
   (use-package json-mode :straight t
     :mode "\\.json\\'")
-  
-  (use-package mips-mode :straight t
-    :mode "\\.asm\\'")
   
   (use-package kbd-mode
     :straight (kbd-mode :type git :host github :repo "kmonad/kbd-mode")
     :mode "\\.kbd\\'")
+  
+  (use-package haskell-mode
+    :straight t)
 #+end_src
 * Checkers
 Set up checkers, i.e. syntax checking, spell checkers, etc
@@ -606,14 +607,7 @@ Set gui settings, theme, fonts, etc
   (use-package doom-themes
     :straight t
     :init
-    (load-theme 'doom-gruvbox t)
-    (defun doom-one-themes-toggle ()
-      "Toggle between `doom-one' and `doom-one-light' themes."
-      (interactive)
-      (pcase (car custom-enabled-themes)
-        ('doom-gruvbox (load-theme 'doom-gruvbox-light))
-        ('doom-gruvbox-light (load-theme 'doom-gruvbox))
-        ))
+    (load-theme 'doom-dracula t)
     :general
     ("<f5>" 'doom-one-themes-toggle)
     )

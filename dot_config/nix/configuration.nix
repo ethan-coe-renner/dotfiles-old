@@ -253,6 +253,7 @@ in {
         nodePackages.npm
         nodejs
         ghc
+        haskellPackages.hindent
 
         # Temporary
         rpi-imager

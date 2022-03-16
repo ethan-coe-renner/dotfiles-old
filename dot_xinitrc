@@ -8,6 +8,6 @@ picom -b
 
 grobi update
 
-#exec xmonad
-exec stumpwm
+exec xmonad
+#exec stumpwm
 #exec spectrwm

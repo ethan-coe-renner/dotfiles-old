@@ -491,9 +491,11 @@ Automatic formatting
 #+begin_src emacs-lisp
   (use-package aggressive-indent
     :straight t
-    :hook (prog-mode . aggressive-indent-mode)
     )
-
+  (global-aggressive-indent-mode 1)
+  
+  
+  
   (use-package format-all
     :straight t
     :hook
@@ -545,12 +547,18 @@ Set up major modes for languages, etc
   (use-package kbd-mode
     :straight (kbd-mode :type git :host github :repo "kmonad/kbd-mode")
     :mode "\\.kbd\\'")
+  
+  (use-package haskell-mode
+    :straight t)
+  
 #+end_src
 * Checkers
 Set up checkers, i.e. syntax checking, spell checkers, etc
 #+begin_src emacs-lisp
   (use-package flycheck
     :straight t
+    :custom
+    (flycheck-disabled-checkers '(haskell-stack-ghc))
     :defer t
     :init (global-flycheck-mode)
     )
@@ -646,6 +654,9 @@ Set gui settings, theme, fonts, etc
     :init
     (doom-modeline-mode 1))
   
+  
+  (use-package rainbow-mode
+    :straight t)
 #+end_src
 * local variables
 ;; Local Variables: 

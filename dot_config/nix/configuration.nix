@@ -271,7 +271,7 @@ in {
         aalib
         asciiquarium
       ];
-  fonts.fonts = with pkgs; [ noto-fonts source-code-pro ];
+  fonts.fonts = with pkgs; [ noto-fonts source-code-pro font-awesome ];
   powerManagement.powertop.enable = true;
 
   services = {

@@ -21,14 +21,14 @@ import XMonad.Layout.ToggleLayouts
 import XMonad.Actions.Navigation2D
 
 import System.Exit
-
+  
 main :: IO ()
 main =
   xmonad .
   withNavigation2DConfig def {defaultTiledNavigation = sideNavigation} .
   ewmhFullscreen .
   ewmh .
-  withEasySB (statusBarProp "xmobar" (pure myXmobarPP)) defToggleStrutsKey $
+  withEasySB (xmobar0 <> xmobar1) defToggleStrutsKey $
   myConfig
 
 myConfig =
@@ -43,12 +43,13 @@ myConfig =
   , ("<XF86Favorites>", spawn "bemenu-run")
   , ("M-g", spawn "qutebrowser")
   , ("M-<Return>", spawn "alacritty -e sh -c 'tmux attach || tmux'")
-  , ("M-l", spawn "slock")
+  , ("M-S-l", spawn "slock")
   , ("M-x", spawn "emacsclient -c")
     -- volume --
   , ("<XF86AudioMute>", spawn "amixer -q set Master toggle")
   , ("<XF86AudioLowerVolume>", spawn "amixer -q set Master 5%-")
   , ("<XF86AudioRaiseVolume>", spawn "amixer -q set Master 5%+")
+  , ("<XF86AudioMicMute>", spawn "pactl set-source-mute @DEFAULT_SOURCE@ toggle")
   -- brightness --
   , ("<XF86MonBrightnessUp>", spawn "light -A 10")
   , ("<XF86MonBrightnessDown>", spawn "light -U 10")
@@ -65,7 +66,8 @@ myConfig =
   , ("M-S-<D>", windowSwap D False)
   , ("M-S-<R>", windowSwap R False)
   , ("M-S-<L>", windowSwap L False)
-  --- can also add navigation of screens here
+  -- multi-monitor --
+  , ("<XF86Display>", spawn "grobi update")
   ]
 
 -- XMonad Session Management --
@@ -73,13 +75,16 @@ myManageHook :: ManageHook
 myManageHook =
   composeAll [className =? "Gimp" --> doFloat, isDialog --> doFloat]
 
-myLayout = toggleLayouts Full (spacing 15 $ tiled ||| threeCol)
+myLayout = toggleLayouts Full (spacing 5 $ tiled ||| threeCol)
   where
     threeCol = ThreeColMid nmaster delta ratio
     tiled = Tall nmaster delta ratio
     nmaster = 1 -- Default number of windows in the master pane
     ratio = 1 / 2 -- Default proportion of screen occupied by master pane
     delta = 3 / 100 -- Percent of screen to increment by when resizing panes
+
+xmobar0 = statusBarProp "xmobar -x 0" (pure myXmobarPP)
+xmobar1 = statusBarProp "xmobar -x 1" (pure myXmobarPP)
 
 myXmobarPP :: PP
 myXmobarPP =

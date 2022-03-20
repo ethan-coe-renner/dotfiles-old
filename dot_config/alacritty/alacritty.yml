@@ -365,7 +365,7 @@ cursor:
 #   - (Linux/BSD) user login shell
 #   - (Windows) powershell
 shell:
- program: /bin/zsh
+ program: /run/current-system/sw/bin/zsh
 #  args:
 #    - --login
 

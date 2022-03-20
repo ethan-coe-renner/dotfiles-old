@@ -183,7 +183,6 @@ in {
         acpi
         weather
         eww
-        betterlockscreen
 
         ## pentest
         # hashcat

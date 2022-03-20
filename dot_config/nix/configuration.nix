@@ -109,8 +109,6 @@ in {
         sxiv
         simplescreenrecorder
 
-        ormolu
-
         # Terminal
         alacritty
         tmux
@@ -185,6 +183,7 @@ in {
         acpi
         weather
         eww
+        betterlockscreen
 
         ## pentest
         # hashcat

@@ -1,6 +1,6 @@
 kmonad /home/ethan/.config/kmonad/t480.kbd &
 
-betterlockscreen -w
+source ~/.fehbg
 
 dunst &
 

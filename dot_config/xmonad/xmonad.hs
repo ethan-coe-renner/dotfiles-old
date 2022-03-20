@@ -55,7 +55,7 @@ myConfig =
   , ("M-g", spawn myBrowser)
   -- , ("M-<Return>", spawn $ myTerminal ++ " -e sh -c 'tmux attach || tmux'")
   , ("M-<Return>", spawn myTerminal)
-  , ("M-S-l", spawn "betterlockscreen --lock blur")
+  , ("M-S-l", spawn "slock")
   , ("M-x", spawn myEditor)
     -- volume --
   , ("<XF86AudioMute>", spawn "amixer -q set Master toggle")

@@ -38,7 +38,7 @@ in {
   nix.optimise.automatic = true;
 
   nix.settings.trusted-users = [ "root" "ethan" ];
-  hardware.bluetooth.enable=true;
+  hardware.bluetooth.enable = true;
 
   # Enable sound.
   sound.enable = true;
@@ -72,204 +72,207 @@ in {
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  nixpkgs.config = { allowUnfree = true; };
+  nixpkgs.config = {
+    allowUnfree = true;
+    pulseaudio = true;
+  };
   environment.systemPackages = with pkgs;
     let
-      my-python-packages = python-packages: with python-packages; [
-        # pygame
-        matplotlib
-      ]; 
+      my-python-packages = python-packages:
+        with python-packages;
+        [
+          # pygame
+          matplotlib
+        ];
       python-with-my-packages = python3.withPackages my-python-packages;
 
-    in
-      [
-        python-with-my-packages
-        # Internet
-        qbittorrent
-        oneshot
-        # tor-browser-bundle-bin
-        bind
-        wget
+    in [
+      python-with-my-packages
+      # Internet
+      qbittorrent
+      oneshot
+      # tor-browser-bundle-bin
+      bind
+      wget
 
-        ## Browser
-        qutebrowser
-        firefox
-        nyxt
-        chromium
-        google-chrome
+      ## Browser
+      qutebrowser
+      firefox
+      nyxt
+      chromium
+      google-chrome
 
-        # Media
-        freetube
-        yt-dlp
-        mpv
-        mpc_cli
-        ncmpcpp
-        vlc
-        feh
-        sxiv
-        simplescreenrecorder
+      # Media
+      freetube
+      yt-dlp
+      mpv
+      mpc_cli
+      ncmpcpp
+      vlc
+      feh
+      sxiv
+      simplescreenrecorder
 
-        # Terminal
-        alacritty
-        tmux
-        neovim
+      # Terminal
+      alacritty
+      tmux
+      neovim
 
+      vscodium
+      atom
 
-        vscodium
-        atom
+      ## Shell
+      tealdeer
+      python39Packages.howdoi
+      yapf
+      zoxide
+      starship
+      exa
+      tree
+      dust
+      unzip
+      file
+      fd
+      skim
+      bat
+      age
+      rage
+      rclone
+      pandoc
+      wkhtmltopdf
+      python39Packages.pdftotext
+      python39Packages.bootstrapped-pip
+      bottom
+      zip
 
-        ## Shell
-        tealdeer
-        python39Packages.howdoi
-        yapf
-        zoxide
-        starship
-        exa
-        tree
-        dust
-        unzip
-        file
-        fd
-        skim
-        bat
-        age
-        rage
-        rclone
-        pandoc
-        wkhtmltopdf
-        python39Packages.pdftotext
-        python39Packages.bootstrapped-pip
-        bottom
-        zip
+      # Backup
+      chezmoi
+      restic
 
-        # Backup
-        chezmoi
-        restic
+      # Photography
+      darktable
+      hugin
+      digikam
+      rawtherapee
 
-        # Photography
-        darktable
-        hugin
-        digikam
-        rawtherapee
+      # Image manipulation
+      gimp
+      inkscape
+      imagemagick
 
-        # Image manipulation
-        gimp
-        inkscape
-        imagemagick
+      # GUI
+      ## Utilities
+      xmobar
+      polybar
+      libnotify
+      dunst
+      stalonetray
+      networkmanagerapplet
+      dmenu
+      rofi
+      flameshot
+      scrot
+      arandr
+      gparted
+      pcmanfm
+      gtk3
+      keepassxc
+      xclip
+      xorg.xbacklight
+      grobi
+      kmonad
+      stack
+      pciutils
+      picom
+      acpi
+      weather
+      eww
 
-        # GUI
-        ## Utilities
-        xmobar
-        polybar
-        libnotify
-        dunst
-        stalonetray
-        networkmanagerapplet
-        dmenu
-        rofi
-        flameshot
-        scrot
-        arandr
-        gparted
-        pcmanfm
-        gtk3
-        keepassxc
-        xclip
-        xorg.xbacklight
-        grobi
-        kmonad
-        stack
-        pciutils
-        picom
-        acpi
-        weather
-        eww
+      ## pentest
+      # hashcat
+      crunch
+      # intel-ocl # required for hashcat
 
-        ## pentest
-        # hashcat
-        crunch
-        # intel-ocl # required for hashcat
+      ## Appearance
+      lxappearance
+      papirus-icon-theme
+      gruvbox-dark-gtk
+      gruvbox-dark-icons-gtk
 
-        ## Appearance
-        lxappearance
-        papirus-icon-theme
-        gruvbox-dark-gtk
-        gruvbox-dark-icons-gtk
+      # Audio
+      pamixer
+      pavucontrol
+      elisa
+      kid3
+      spotify
 
-        # Audio
-        pamixer
-        pavucontrol
-        elisa
-        kid3
-        spotify
+      # Productivity
+      calibre
+      libreoffice
+      xournalpp
+      zathura
+      qt4
+      libsForQt5.kde-gtk-config # inhibits zathura error "colorreload module"
+      hunspell
+      hunspellDicts.en_US
+      gnuplot
+      texlive.combined.scheme-full
+      bitwarden
 
-        # Productivity
-        calibre
-        libreoffice
-        xournalpp
-        zathura
-        qt4
-        libsForQt5.kde-gtk-config # inhibits zathura error "colorreload module"
-        hunspell
-        hunspellDicts.en_US
-        gnuplot
-        texlive.combined.scheme-full
-        bitwarden
+      # Games
+      endless-sky
+      desmume
+      superTuxKart
+      xonotic
+      gnugo
+      kigo
+      discord
+      betterdiscordctl
 
-        # Games
-        endless-sky
-        desmume
-        superTuxKart
-        xonotic
-        gnugo
-        kigo
-        discord
-        betterdiscordctl
-        
-        # Programming
-        python3
-        jdk
-        gcc
-        astyle
-        valgrind
-        rustup
-        wasm-pack
-        nixfmt
-        nodePackages.prettier
-        git
-        gnumake
-        cmake
-        go-task
-        clang
-        ccls
-        coreutils
-        libtool
-        grex
-        ripgrep
-        ripgrep-all
-        pkg-config
-        glibc
-        nodePackages.npm
-        nodejs
-        ghc
-        haskellPackages.hindent
+      # Programming
+      python3
+      jdk
+      gcc
+      astyle
+      valgrind
+      rustup
+      wasm-pack
+      nixfmt
+      nodePackages.prettier
+      git
+      gnumake
+      cmake
+      go-task
+      clang
+      ccls
+      coreutils
+      libtool
+      grex
+      ripgrep
+      ripgrep-all
+      pkg-config
+      glibc
+      nodePackages.npm
+      nodejs
+      ghc
+      haskellPackages.hindent
 
-        # Temporary
-        rpi-imager
-        hello
+      # Temporary
+      rpi-imager
+      hello
 
-        # fun
-        cowsay
-        lolcat
-        sl
-        fortune
-        xcowsay
-        toilet
-        oneko
-        espeak
-        aalib
-        asciiquarium
-      ];
+      # fun
+      cowsay
+      lolcat
+      sl
+      fortune
+      xcowsay
+      toilet
+      oneko
+      espeak
+      aalib
+      asciiquarium
+    ];
   fonts.fonts = with pkgs; [ noto-fonts source-code-pro font-awesome siji ];
   powerManagement.powertop.enable = true;
 
@@ -294,8 +297,6 @@ in {
         ];
       };
 
-
-      
       layout = "us";
 
       libinput = {
@@ -329,7 +330,6 @@ in {
     enable = true; # needed for flatpak
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
-
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

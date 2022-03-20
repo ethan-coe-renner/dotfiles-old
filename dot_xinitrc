@@ -1,6 +1,6 @@
 kmonad /home/ethan/.config/kmonad/t480.kbd &
 
-feh --bg-scale /home/ethan/media/pictures/wallpapers/enterpriseD.jpg
+betterlockscreen -w
 
 dunst &
 
@@ -9,5 +9,3 @@ picom -b
 grobi update
 
 exec xmonad
-#exec stumpwm
-#exec spectrwm

@@ -160,6 +160,7 @@ in {
         # GUI
         ## Utilities
         xmobar
+        polybar
         libnotify
         dunst
         stalonetray

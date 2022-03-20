@@ -51,6 +51,7 @@ myConfig =
   , ("M-c", spawn "xmonad --recompile && xmonad --restart")
   -- program launchers --
   , ("<XF86Favorites>", spawn "bemenu-run")
+  , ("<XF86Tools>", spawn "chezmoi managed | bemenu | xargs chezmoi edit")
   , ("M-g", spawn myBrowser)
   -- , ("M-<Return>", spawn $ myTerminal ++ " -e sh -c 'tmux attach || tmux'")
   , ("M-<Return>", spawn $ myTerminal)

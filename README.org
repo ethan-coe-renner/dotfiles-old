@@ -7,7 +7,7 @@ This repository contains my dotfiles managed by [[https://www.chezmoi.io/][Chezm
 ** [[file:dot_config/nix/configuration.nix][Configuration.nix]]
 Contains my [[https://nixos.org][NixOS]] configuration.
 ** [[file:dot_config/xmonad/xmonad.hs][xmonad.hs]]
-Contains my configuration for [[xmonad.org][Xmonad]], my preferred window manager
+Contains my configuration for [[https://www.xmonad.org][Xmonad]], my preferred window manager
 ** [[file:dot_emacs.d/emacs.org][Emacs.org]]
 Contains my emacs literate configuration. Chezmoi contains a [[file:run_once_emacsBootstrap.sh][script]] to bootstrap this such that it is not necessary to open emacs to tangle this file.
 ** [[file:dot_config/qutebrowser/config.py][Qutebrowser Config]]

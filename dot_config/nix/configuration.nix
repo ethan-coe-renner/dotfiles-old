@@ -121,6 +121,11 @@ in {
       vscodium
       atom
 
+
+      ## other
+      qemu_full
+      coreboot-toolchain.riscv
+      
       ## Shell
       tealdeer
       python39Packages.howdoi
@@ -304,6 +309,7 @@ in {
         touchpad = {
           accelSpeed = "0.3";
           disableWhileTyping = true;
+          tapping = false;
         };
         mouse.accelSpeed = "-0.3";
       };

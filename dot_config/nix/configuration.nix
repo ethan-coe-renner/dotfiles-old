@@ -54,6 +54,7 @@ in {
     light.enable = true;
     zsh.enable = true;
     ssh.startAgent = true;
+    steam.enable = true;
   };
 
   users = {
@@ -83,6 +84,7 @@ in {
         [
           # pygame
           matplotlib
+          pybluez
         ];
       python-with-my-packages = python3.withPackages my-python-packages;
 
@@ -134,7 +136,6 @@ in {
       starship
       exa
       tree
-      dust
       unzip
       file
       fd
@@ -228,7 +229,6 @@ in {
       endless-sky
       desmume
       superTuxKart
-      xonotic
       gnugo
       kigo
       discord
@@ -241,8 +241,10 @@ in {
       astyle
       valgrind
       rustup
+      cargo-edit
       wasm-pack
       nixfmt
+      asmfmt
       nodePackages.prettier
       git
       gnumake
@@ -261,10 +263,12 @@ in {
       nodejs
       ghc
       haskellPackages.hindent
+      swiProlog
 
       # Temporary
       rpi-imager
       hello
+
 
       # fun
       cowsay
@@ -277,6 +281,7 @@ in {
       espeak
       aalib
       asciiquarium
+
     ];
   fonts.fonts = with pkgs; [ noto-fonts source-code-pro font-awesome siji ];
   powerManagement.powertop.enable = true;
@@ -288,17 +293,15 @@ in {
       # layout = "dvorak";
       # desktopManager.plasma5.enable = true;
       displayManager.startx.enable = true;
-      windowManager.spectrwm.enable = true;
-      windowManager.stumpwm.enable = true;
 
       # XMonad
       windowManager.xmonad = {
         enable = true;
         enableContribAndExtras = true;
         extraPackages = haskellPackages: [
-          haskellPackages.xmonad_0_17_0
-          haskellPackages.xmonad-contrib_0_17_0
-          haskellPackages.xmonad-extras_0_17_0
+          haskellPackages.xmonad
+          haskellPackages.xmonad-contrib
+          haskellPackages.xmonad-extras
         ];
       };
 

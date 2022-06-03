@@ -1,4 +1,5 @@
 kmonad /home/ethan/.config/kmonad/t480.kbd &
+kmonad /home/ethan/.config/kmonad/external.kbd &
 
 source ~/.fehbg
 
